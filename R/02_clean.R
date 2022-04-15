@@ -1,5 +1,6 @@
 # Load libraries ----------------------------------------------------------
 library("tidyverse")
+library("dplyr")
 
 
 # Define functions --------------------------------------------------------
@@ -7,10 +8,13 @@ source(file = "R/99_project_functions.R")
 
 
 # Load data ---------------------------------------------------------------
-proteosome_data <- read_csv(file = "data/01_proteosome_data.csv") #tsv
-clinical_data <- read_csv(file = "data/01_clinical_data.csv") #tsv
+proteomes <- read_tsv(file = "data/proteomes.tsv")
+clinical <- read_tsv(file = "data/clinical.tsv")
+proteins <- read_tsv(file = "data/proteins.tsv")
 
 
+head(proteomes)
+dim(proteomes)
 # Wrangle data ------------------------------------------------------------
 # my_data_clean <- 
 #   my_data %>% 
@@ -51,7 +55,15 @@ colnames(prot) = "Complete TCGA ID"
 
 # Join data
 data = clinical_data %>% left_join(prot, by = "Complete TCGA ID")
-  
+
+#Allie:
+# Regex for the .TCGA [.]\d{2}TCGA"
+# REgex for the names"[A-Z].-A[0-9A-Z]{3}")
+
+my_data_clean <- 
+  my_data %>% 
+  drop_na() 
+
 
 
 # Write data --------------------------------------------------------------
