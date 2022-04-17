@@ -11,11 +11,6 @@ source(file = "R/99_project_functions.R")
 
 
 # Write data --------------------------------------------------------------
-write_csv(x = clinical_data, #my_data,
-          file = "data/01_clinical_data.csv") #tsv
-write_csv(x = proteosome_data, #my_data,
-          file = "data/01_proteosome_data.csv") #tsv
-
 proteomes_raw <- read_csv(file = "data/_raw/77_cancer_proteomes_CPTAC_itraq.csv")
 clinical_raw <- read_csv(file = "data/_raw/clinical_data_breast_cancer.csv")
 proteins_raw <- read_csv(file = "data/_raw/PAM50_proteins.csv")

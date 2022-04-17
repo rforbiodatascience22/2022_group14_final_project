@@ -15,17 +15,16 @@ proteins <- read_tsv(file = "data/proteins.tsv")
 
 head(proteomes)
 dim(proteomes)
-# Wrangle data ------------------------------------------------------------
-# my_data_clean <- 
-#   my_data %>% 
-#   drop_na() 
-#my_data <- cancerProteosom_raw # %>% ...
-proteosome_data <- proteosome_data %>%
-  select(., -c(gene_symbol, gene_name, RefSeq_accession_number)) #%>%
-#mutate(col = str_remove(col, ".\\d+TCGA"))
 
-# Renaming
-clinical_data <- clinical_data_raw %>%
+# Wrangle data ------------------------------------------------------------
+
+# Remove some columns
+proteosome_data <- proteomes %>%
+  select(., -c(gene_symbol, gene_name, RefSeq_accession_number)) #%>%
+  #mutate(col = str_remove(col, ".\\d+TCGA"))
+
+# Renaming column values
+clinical_data <- clinical %>%
   mutate_at("Complete TCGA ID", 
             str_replace, 
             "TCGA-",
@@ -60,16 +59,21 @@ data = clinical_data %>% left_join(prot, by = "Complete TCGA ID")
 # Regex for the .TCGA [.]\d{2}TCGA"
 # REgex for the names"[A-Z].-A[0-9A-Z]{3}")
 
-my_data_clean <- 
-  my_data %>% 
-  drop_na() 
+# my_data_clean <- 
+#   my_data %>% 
+#   drop_na() 
 
 
 
 # Write data --------------------------------------------------------------
+write_tsv(x = clinical_data, #my_data,
+          file = "data/02_clinical_data.tsv") #tsv
+write_tsv(x = proteosome_data, #my_data,
+          file = "data/02_proteosome_data.tsv") #tsv
+
 # write_tsv(x = my_data_clean,
 #           file = "data/02_my_data_clean.tsv")
-write_csv(x = clinical_data, #my_data,
-          file = "data/02_clinical_data.csv") #tsv
-write_csv(x = proteosome_data, #my_data,
-          file = "data/02_proteosome_data.csv") #tsv
+# write_csv(x = clinical_data, #my_data,
+#           file = "data/02_clinical_data.csv") #tsv
+# write_csv(x = proteosome_data, #my_data,
+#           file = "data/02_proteosome_data.csv") #tsv
