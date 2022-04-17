@@ -10,8 +10,8 @@ source(file = "R/99_project_functions.R")
 
 # Load data ---------------------------------------------------------------
 #my_data_clean_aug <- read_tsv(file = "data/03_my_data_clean_aug.tsv")
-clean_proteosome_data <- read_csv(file = "data/02_proteosome_data.csv") #tsv
-clean_clinical_data <- read_csv(file = "data/02_clinical_data.csv") #tsv
+clean_proteosome_data <- read_tsv(file = "data/02_proteosome_data.tsv") #tsv
+clean_clinical_data <- read_tsv(file = "data/02_clinical_data.tsv") #tsv
 
 
 # Wrangle data ------------------------------------------------------------
@@ -63,7 +63,7 @@ p3 <- clean_clinical_data %>%
 
 
 # Write data --------------------------------------------------------------
-write_tsv(...)
+#write_tsv(...)
 ggsave(p1, path = "results", filename = "boxPlotPAM50.png")
 ggsave(p2, path = "results", filename = "barPlotTumorStage.png")
 ggsave(p3, path = "results", filename = "piePlotPAM50.png")
