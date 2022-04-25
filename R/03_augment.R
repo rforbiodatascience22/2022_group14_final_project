@@ -1,6 +1,6 @@
 # Load libraries ----------------------------------------------------------
 library("tidyverse")
-
+library("dplyr")
 
 # Define functions --------------------------------------------------------
 source(file = "R/99_project_functions.R")
@@ -10,12 +10,8 @@ source(file = "R/99_project_functions.R")
 clinical_data <- read_tsv(file = "data/02_clinical_data.tsv")
 
 
-view(clinical_data)
-
 # Wrangle data ------------------------------------------------------------
-my_data_clean_aug <- my_data_clean # %>% ...
-
-
+# Adding Age groups to data
 clinical_data <- clinical_data %>% 
   mutate(Age_groups = case_when(
     30 <= `Age at Initial Pathologic Diagnosis` & `Age at Initial Pathologic Diagnosis`< 40 ~ "30-40",
@@ -24,6 +20,11 @@ clinical_data <- clinical_data %>%
     60 <= `Age at Initial Pathologic Diagnosis` & `Age at Initial Pathologic Diagnosis` < 70 ~ "60-70",
     70 <= `Age at Initial Pathologic Diagnosis` & `Age at Initial Pathologic Diagnosis` < 80 ~ "70-80",
     `Age at Initial Pathologic Diagnosis` >= 80 ~ "80+"))
+
+
+# Augment data ---------------------------------------------------------
+
+
 
 # Write data --------------------------------------------------------------
 write_tsv(x = my_data_clean_aug,
