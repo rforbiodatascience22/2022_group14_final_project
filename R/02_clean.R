@@ -39,24 +39,25 @@ clinical_data <- clinical %>%
 
 # Convert to numeric or binary
 clinical_data <- clinical_data %>%
-  mutate(Gender_bin = if_else(Gender == "FEMALE", 1, 0),
-         ER_Status_bin = if_else(`ER Status` == "Negative", 0, 1),
-         PR_Status_bin = if_else(`PR Status` == "Negative", 0, 1),
-         HER2_Final_Status_bin = if_else(`HER2 Final Status` == "Negative", 0, 1),
-         Tumor_num = as.numeric(str_replace(Tumor, "T", "")),
-         Node_num = as.numeric(str_replace(Node, "N", "")),
-         Metastasis_num = as.numeric(str_replace(Metastasis, "M", ""))) #%>%
-  #select(., 
-  #       -c(`Tumor--T1 Coded`, `Node-Coded`, `Metastasis-Coded`)) 
+  mutate(Gender = if_else(Gender == "FEMALE", 1, 0),
+         Tumor = as.numeric(str_replace(Tumor, "T", "")),
+         Node = as.numeric(str_replace(Node, "N", "")),
+         Metastasis = as.numeric(str_replace(Metastasis, "M", ""))) %>%
+  select(., -c(`Tumor--T1 Coded`, 
+               `Node-Coded`, 
+               `Metastasis-Coded`)) 
 
-
+# Do we need to binarize? feels like 'negative' and positive' is fine for analysis
+# Also we don't reallly use it?
+# mutate (ER_Status_bin = if_else(`ER Status` == "Negative", 0, 1),
+# PR Status = if_else(`PR Status` == "Negative", 0, 1),
+# HER2 Final Status` = if_else(`HER2 Final Status` == "Negative", 0, 1) )
 
 # Transpose proteosome data
 prot <- tibble(cbind(nms = names(proteosome_data), t(proteosome_data)))
 colnames(prot) = "Complete TCGA ID"
 
-
-
+view(prot)
 # Join data
 data = clinical_data %>% left_join(prot, by = "Complete TCGA ID")
 
