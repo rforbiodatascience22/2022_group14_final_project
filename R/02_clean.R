@@ -48,7 +48,7 @@ clinical_data <- clinical_data %>%
   #select(., 
   #       -c(`Tumor--T1 Coded`, `Node-Coded`, `Metastasis-Coded`)) 
 
-view(clinical_data)
+
 
 # Transpose proteosome data
 prot <- tibble(cbind(nms = names(proteosome_data), t(proteosome_data)))
