@@ -13,10 +13,9 @@ clinical <- read_tsv(file = "data/clinical.tsv")
 proteins <- read_tsv(file = "data/proteins.tsv")
 
 
-# Wrangle data ------------------------------------------------------------
+# Cleaning Data ------------------------------------------------------------
 
-
-# Proteosome Files
+### Proteosome Files
 # Remove first 3 columns in proteosomes file 
 proteosome_data <- proteomes %>%
   select(., -c(gene_symbol, 
@@ -30,7 +29,7 @@ colnames(proteosome_data) <- sub(pattern = ".\\d+TCGA",
                                  x = colnames(proteosome_data), 
                                  perl = TRUE)
 
-## Clinical Data Files 
+### Clinical Data Files 
 # Renaming column values
 clinical_data <- clinical %>%
   mutate_at("Complete TCGA ID", 
@@ -40,10 +39,10 @@ clinical_data <- clinical %>%
 
 # Convert to numeric or binary
 clinical_data <- clinical_data %>%
-  mutate(Gender_bin = ifelse(Gender == "FEMALE", 1, 0),
-         ER_Status_bin = ifelse(`ER Status` == "Negative", 0, 1),
-         PR_Status_bin = ifelse(`PR Status` == "Negative", 0, 1),
-         HER2_Final_Status_bin = ifelse(`HER2 Final Status` == "Negative", 0, 1),
+  mutate(Gender_bin = if_else(Gender == "FEMALE", 1, 0),
+         ER_Status_bin = if_else(`ER Status` == "Negative", 0, 1),
+         PR_Status_bin = if_else(`PR Status` == "Negative", 0, 1),
+         HER2_Final_Status_bin = if_else(`HER2 Final Status` == "Negative", 0, 1),
          Tumor_num = as.numeric(str_replace(Tumor, "T", "")),
          Node_num = as.numeric(str_replace(Node, "N", "")),
          Metastasis_num = as.numeric(str_replace(Metastasis, "M", ""))) #%>%
@@ -51,13 +50,15 @@ clinical_data <- clinical_data %>%
   #       -c(`Tumor--T1 Coded`, `Node-Coded`, `Metastasis-Coded`)) 
 
 
+
 # Transpose proteosome data
 prot <- tibble(cbind(nms = names(proteosome_data), t(proteosome_data)))
 colnames(prot) = "Complete TCGA ID"
 
+
+
 # Join data
 data = clinical_data %>% left_join(prot, by = "Complete TCGA ID")
-
 
 
 # Write data --------------------------------------------------------------
