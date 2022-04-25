@@ -12,24 +12,20 @@ proteomes <- read_tsv(file = "data/proteomes.tsv")
 clinical <- read_tsv(file = "data/clinical.tsv")
 proteins <- read_tsv(file = "data/proteins.tsv")
 
-
 # Cleaning Data ------------------------------------------------------------
-
-### Proteosome Files
-# Remove first 3 columns in proteosomes file 
-proteosome_data <- proteomes %>%
+# PROTEOMES FILE
+# Remove first 3 columns, rename the columns and remove duplicate columns
+proteome_data <- proteomes %>% #We remove the names cause this just doesn't fit with our shit
+  select(-c("AO-A12D.05TCGA", #Duplicate names
+            "C8-A131.32TCGA",
+            "AO-A12B.34TCGA")) %>%
+  rename_with( ~ str_replace_all(.,"\\..{6}","")) %>% 
   select(., -c(gene_symbol, 
                gene_name, 
                RefSeq_accession_number))
 
 
-# Renaming columns 
-colnames(proteosome_data) <- sub(pattern = ".\\d+TCGA", 
-                                 replacement = "", 
-                                 x = colnames(proteosome_data), 
-                                 perl = TRUE)
-
-### Clinical Data Files 
+# CLINICALS FILE 
 # Renaming column values
 clinical_data <- clinical %>%
   mutate_at("Complete TCGA ID", 
