@@ -13,10 +13,9 @@ clinical <- read_tsv(file = "data/clinical.tsv")
 proteins <- read_tsv(file = "data/proteins.tsv")
 
 
-# Wrangle data ------------------------------------------------------------
+# Cleaning Data ------------------------------------------------------------
 
-
-# Proteosome Files
+### Proteosome Files
 # Remove first 3 columns in proteosomes file 
 proteosome_data <- proteomes %>%
   select(., -c(gene_symbol, 
@@ -29,7 +28,7 @@ colnames(proteosome_data) <- sub(pattern = ".\\d+TCGA",
                                  x = colnames(proteosome_data), 
                                  perl = TRUE)
 
-## Clinical Data Files 
+### Clinical Data Files 
 # Renaming column values
 clinical_data <- clinical %>%
   mutate_at("Complete TCGA ID", 
@@ -49,6 +48,7 @@ clinical_data <- clinical_data %>%
   #select(., 
   #       -c(`Tumor--T1 Coded`, `Node-Coded`, `Metastasis-Coded`)) 
 
+view(clinical_data)
 
 # Transpose proteosome data
 prot <- tibble(cbind(nms = names(proteosome_data), t(proteosome_data)))
