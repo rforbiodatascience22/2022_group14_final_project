@@ -13,6 +13,7 @@ clinical <- read_tsv(file = "data/clinical.tsv")
 proteins <- read_tsv(file = "data/proteins.tsv")
 
 # Cleaning Data ------------------------------------------------------------
+
 # PROTEOMES FILE
 # Remove first 3 columns, rename the columns and remove duplicate columns
 proteome_data <- proteomes %>% #We remove the names cause this just doesn't fit with our shit
@@ -29,27 +30,11 @@ proteome_data <- proteomes %>% #We remove the names cause this just doesn't fit 
 # Renaming column values
 clinical_data <- clinical %>%
   mutate_at("Complete TCGA ID", 
-            str_replace, 
-            "TCGA-",
-            "")
+            str_replace, "TCGA-","")
 
-
-##### I WANT THIS IN AUGMENT PLSSS !!!###
-# Convert to numeric or binary
-clinical_data <- clinical_data %>%
-  mutate(Gender = case_when(Gender == "FEMALE" ~1, #Binarize
-                            Gender == "MALE" ~ 0),
-         HER2_binary = case_when(`HER2 Final Status` == "Negative" ~ 0,
-                                 `HER2 Final Status` == "Positive" ~ 1), #This adds NA for equivocal
-         Tumor = as.numeric(str_replace(Tumor, "T", "")),
-         Node = as.numeric(str_replace(Node, "N", "")),
-         Metastasis = as.numeric(str_replace(Metastasis, "M", ""))) %>%
-  select(., -c(`Tumor--T1 Coded`, 
-               `Node-Coded`, 
-               `Metastasis-Coded`)) 
 
 # Write data --------------------------------------------------------------
-write_tsv(x = clinical_data, #my_data,
+write_tsv(x = clinical_data, 
           file = "data/02_clinical_data.tsv") #tsv
-write_tsv(x = proteosome_data, #my_data,
-          file = "data/02_proteosome_data.tsv") #tsv
+write_tsv(x = proteome_data,
+          file = "data/02_proteome_data.tsv") #tsv
