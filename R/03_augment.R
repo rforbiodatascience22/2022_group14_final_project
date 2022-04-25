@@ -26,15 +26,17 @@ joined_data = clinical_data %>% left_join(prot, copy = T)
 #  if all == NA 
 #    then rm 
 
-#data_coloumns <- joined_data %>% 
-#  select(matches("V\\d+")) %>%
-#  colnames()
+data_coloumns <- joined_data %>% 
+  select(matches("V\\d+")) %>%
+  colnames()
 
 #here we need to fix that V3 dosn't represent all the genes
 #and alone decides if the row goes out 
 cleaned_joined_data <- joined_data %>% drop_na("V3")
 
-
+#to check
+temp <- joined_data %>% select(data_coloumns) %>% filter(.,rowSums(is.na(.)) !=ncol(.))
+  
 
     
     
