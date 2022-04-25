@@ -7,11 +7,20 @@ source(file = "R/99_project_functions.R")
 
 
 # Load data ---------------------------------------------------------------
-my_data_clean <- read_tsv(file = "data/02_my_data_clean.tsv")
+clinical <- read_tsv(file = "data/02_clinical_data.tsv")
+proteome <- read_tsv(file = "data/02_proteosome_data.tsv")
 
 
 # Wrangle data ------------------------------------------------------------
-my_data_clean_aug <- my_data_clean # %>% ...
+
+
+# Transpose proteosome data
+prot <- cbind("Complete TCGA ID" = names(proteome), t(proteome))
+
+# Join proteosome and clinical data by "Complete TCGA ID"
+data = clinical %>% left_join(prot, copy = T)
+
+
 
 
 # Write data --------------------------------------------------------------

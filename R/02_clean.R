@@ -48,14 +48,7 @@ clinical_data <- clinical_data %>%
   #select(., 
   #       -c(`Tumor--T1 Coded`, `Node-Coded`, `Metastasis-Coded`)) 
 
-view(clinical_data)
 
-# Transpose proteosome data
-prot <- tibble(cbind(nms = names(proteosome_data), t(proteosome_data)))
-colnames(prot) = "Complete TCGA ID"
-
-# Join data
-data = clinical_data %>% left_join(prot, by = "Complete TCGA ID")
 
 
 # Write data --------------------------------------------------------------
