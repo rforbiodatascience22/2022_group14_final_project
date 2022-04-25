@@ -33,6 +33,8 @@ clinical_data <- clinical %>%
             "TCGA-",
             "")
 
+
+##### I WANT THIS IN AUGMENT PLSSS !!!###
 # Convert to numeric or binary
 clinical_data <- clinical_data %>%
   mutate(Gender = case_when(Gender == "FEMALE" ~1, #Binarize
@@ -45,9 +47,6 @@ clinical_data <- clinical_data %>%
   select(., -c(`Tumor--T1 Coded`, 
                `Node-Coded`, 
                `Metastasis-Coded`)) 
-
-view(clinical_data)
-
 
 # Write data --------------------------------------------------------------
 write_tsv(x = clinical_data, #my_data,
