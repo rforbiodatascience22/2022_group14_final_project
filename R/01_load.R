@@ -26,3 +26,4 @@ write_tsv(x = clinical_raw,
           file = "data/clinical.tsv", na = "NA") #tsv
 write_tsv(x = proteins_raw,
           file = "data/proteins.tsv", na = "NA") #tsv
+

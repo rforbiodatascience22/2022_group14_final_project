@@ -20,7 +20,8 @@ proteins <- read_tsv(file = "data/proteins.tsv")
 proteosome_data <- proteomes %>%
   select(., -c(gene_symbol, 
                gene_name, 
-               RefSeq_accession_number)) 
+               RefSeq_accession_number))
+
 
 # Renaming columns 
 colnames(proteosome_data) <- sub(pattern = ".\\d+TCGA", 
@@ -60,10 +61,3 @@ write_tsv(x = clinical_data, #my_data,
           file = "data/02_clinical_data.tsv") #tsv
 write_tsv(x = proteosome_data, #my_data,
           file = "data/02_proteosome_data.tsv") #tsv
-
-# write_tsv(x = my_data_clean,
-#           file = "data/02_my_data_clean.tsv")
-# write_csv(x = clinical_data, #my_data,
-#           file = "data/02_clinical_data.csv") #tsv
-# write_csv(x = proteosome_data, #my_data,
-#           file = "data/02_proteosome_data.csv") #tsv
