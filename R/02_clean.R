@@ -18,7 +18,8 @@ dim(proteomes)
 
 # Wrangle data ------------------------------------------------------------
 
-# Remove some columns
+
+# Remove some columns from 
 proteosome_data <- proteomes %>%
   select(., -c(gene_symbol, gene_name, RefSeq_accession_number)) #%>%
   #mutate(col = str_remove(col, ".\\d+TCGA"))
@@ -54,14 +55,6 @@ colnames(prot) = "Complete TCGA ID"
 
 # Join data
 data = clinical_data %>% left_join(prot, by = "Complete TCGA ID")
-
-#Allie:
-# Regex for the .TCGA [.]\d{2}TCGA"
-# REgex for the names"[A-Z].-A[0-9A-Z]{3}")
-
-# my_data_clean <- 
-#   my_data %>% 
-#   drop_na() 
 
 
 
