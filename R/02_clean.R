@@ -38,17 +38,17 @@ clinical_data <- clinical %>%
 
 # Convert to numeric or binary
 clinical_data <- clinical_data %>%
-  mutate(Gender_bin = if_else(Gender == "FEMALE", 1, 0),
+  mutate(Gender = if_else(Gender == "FEMALE", 1, 0),
          ER_Status_bin = if_else(`ER Status` == "Negative", 0, 1),
          PR_Status_bin = if_else(`PR Status` == "Negative", 0, 1),
          HER2_Final_Status_bin = if_else(`HER2 Final Status` == "Negative", 0, 1),
-         Tumor_num = as.numeric(str_replace(Tumor, "T", "")),
-         Node_num = as.numeric(str_replace(Node, "N", "")),
-         Metastasis_num = as.numeric(str_replace(Metastasis, "M", ""))) #%>%
+         Tumor = as.numeric(str_replace(Tumor, "T", "")),
+         Node = as.numeric(str_replace(Node, "N", "")),
+         Metastasis = as.numeric(str_replace(Metastasis, "M", ""))) #%>%
   #select(., 
   #       -c(`Tumor--T1 Coded`, `Node-Coded`, `Metastasis-Coded`)) 
 
-
+view(clinical_data)
 
 # Transpose proteosome data
 prot <- tibble(cbind(nms = names(proteosome_data), t(proteosome_data)))
