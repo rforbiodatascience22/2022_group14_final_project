@@ -13,28 +13,29 @@ clinical <- read_tsv(file = "data/clinical.tsv")
 proteins <- read_tsv(file = "data/proteins.tsv")
 
 
-head(proteomes)
-dim(proteomes)
-
 # Wrangle data ------------------------------------------------------------
 
 
-# Remove some columns from 
+# Proteosome Files
+# Remove first 3 columns in proteosomes file 
 proteosome_data <- proteomes %>%
-  select(., -c(gene_symbol, gene_name, RefSeq_accession_number)) #%>%
-  #mutate(col = str_remove(col, ".\\d+TCGA"))
+  select(., -c(gene_symbol, 
+               gene_name, 
+               RefSeq_accession_number)) 
 
+# Renaming columns 
+colnames(proteosome_data) <- sub(pattern = ".\\d+TCGA", 
+                                 replacement = "", 
+                                 x = colnames(proteosome_data), 
+                                 perl = TRUE)
+
+## Clinical Data Files 
 # Renaming column values
 clinical_data <- clinical %>%
   mutate_at("Complete TCGA ID", 
             str_replace, 
             "TCGA-",
             "")
-
-colnames(proteosome_data) <- sub(pattern = ".\\d+TCGA", 
-                                 replacement = "", 
-                                 x = colnames(proteosome_data), 
-                                 perl = TRUE)
 
 # Convert to numeric or binary
 clinical_data <- clinical_data %>%
