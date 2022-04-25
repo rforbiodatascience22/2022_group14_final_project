@@ -52,8 +52,6 @@ clinical_data <- clinical_data %>%
 # PR Status = if_else(`PR Status` == "Negative", 0, 1),
 # HER2 Final Status` = if_else(`HER2 Final Status` == "Negative", 0, 1) )
 
-view(clinical_data)
-
 # Transpose proteosome data
 prot <- tibble(cbind(nms = names(proteosome_data), t(proteosome_data)))
 colnames(prot) = "Complete TCGA ID"
