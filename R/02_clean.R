@@ -41,7 +41,7 @@ clinical_data <- clinical_data %>%
   mutate(Gender_bin = if_else(Gender == "FEMALE", 1, 0),
          ER_Status_bin = if_else(`ER Status` == "Negative", 0, 1),
          PR_Status_bin = if_else(`PR Status` == "Negative", 0, 1),
-         HER2_Final_Status_bin = ifelse(`HER2 Final Status` == "Negative", 0, 1),
+         HER2_Final_Status_bin = if_else(`HER2 Final Status` == "Negative", 0, 1),
          Tumor_num = as.numeric(str_replace(Tumor, "T", "")),
          Node_num = as.numeric(str_replace(Node, "N", "")),
          Metastasis_num = as.numeric(str_replace(Metastasis, "M", ""))) #%>%
