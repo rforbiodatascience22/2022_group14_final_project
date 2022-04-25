@@ -39,8 +39,8 @@ clinical_data <- clinical %>%
 # Convert to numeric or binary
 clinical_data <- clinical_data %>%
   mutate(Gender_bin = if_else(Gender == "FEMALE", 1, 0),
-         ER_Status_bin = ifelse(`ER Status` == "Negative", 0, 1),
-         PR_Status_bin = ifelse(`PR Status` == "Negative", 0, 1),
+         ER_Status_bin = if_else(`ER Status` == "Negative", 0, 1),
+         PR_Status_bin = if_else(`PR Status` == "Negative", 0, 1),
          HER2_Final_Status_bin = ifelse(`HER2 Final Status` == "Negative", 0, 1),
          Tumor_num = as.numeric(str_replace(Tumor, "T", "")),
          Node_num = as.numeric(str_replace(Node, "N", "")),
@@ -56,7 +56,6 @@ colnames(prot) = "Complete TCGA ID"
 
 # Join data
 data = clinical_data %>% left_join(prot, by = "Complete TCGA ID")
-
 
 
 # Write data --------------------------------------------------------------
