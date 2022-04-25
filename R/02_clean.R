@@ -22,9 +22,7 @@ proteome_data <- proteomes %>% #We remove the names cause this just doesn't fit 
             "AO-A12B.34TCGA")) %>%
   rename_with( ~ str_replace_all(.,"\\..{6}","")) %>% 
   select(., -c(gene_symbol, 
-               gene_name, 
-               RefSeq_accession_number))
-
+               gene_name))
 
 # CLINICALS FILE 
 # Renaming column values
@@ -35,6 +33,6 @@ clinical_data <- clinical %>%
 
 # Write data --------------------------------------------------------------
 write_tsv(x = clinical_data, 
-          file = "data/02_clinical_data.tsv") #tsv
+          file = "data/02_clinical_data.tsv")
 write_tsv(x = proteome_data,
-          file = "data/02_proteome_data.tsv") #tsv
+          file = "data/02_proteome_data.tsv")

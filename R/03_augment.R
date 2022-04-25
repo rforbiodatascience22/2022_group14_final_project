@@ -5,7 +5,6 @@ library("dplyr")
 # Define functions --------------------------------------------------------
 source(file = "R/99_project_functions.R")
 
-
 # Load data ---------------------------------------------------------------
 
 clinical_data <- read_tsv(file = "data/02_clinical_data.tsv")
@@ -15,7 +14,7 @@ proteome_data <- read_tsv(file = "data/02_proteosome_data.tsv")
 # Wrangle data ------------------------------------------------------------
 
 # CLINICALS DATA 
-#Binarize genders and HER2 stores, tumor, node and metastasis change to numeric
+# Binarize genders and HER2 stores, tumor, node and metastasis change to numeric
 clinical_data <- clinical_data %>%
   mutate(Gender = case_when(Gender == "FEMALE" ~1, 
                             Gender == "MALE" ~ 0),
@@ -43,13 +42,20 @@ clinical_data <- clinical_data %>%
 # PROTEOMES DATA
 
 # Transpose proteosome data
-prot <- (cbind("Complete TCGA ID" = names(proteome_data), t(proteome_data)))
-view(prot)
+prot <- proteome_data %>% 
+  pivot_longer(cols = -c("RefSeq_accession_number"), 
+               names_to = "Complete TCGA ID", 
+               values_to = "value")
+
+prot <- prot %>% 
+  pivot_wider(names_from ="RefSeq_accession_number", 
+              values_from = "value" )
 
 
 # JOINED DATA 
 # Join proteosome and clinical data by "Complete TCGA ID"
 joined_data = clinical_data %>% left_join(prot, copy = T)
+
 
 #view(joined_data)
 #by row 
@@ -61,9 +67,9 @@ joined_data = clinical_data %>% left_join(prot, copy = T)
 #  select(matches("V\\d+")) %>%
 #  colnames()
 
-#here we need to fix that V3 dosn't represent all the genes
+#here we need to fix that NP_958782 dosn't represent all the genes
 #and alone decides if the row goes out 
-cleaned_joined_data <- joined_data %>% drop_na("V3")
+cleaned_joined_data <- joined_data %>% drop_na("NP_958782")
 
     
 # Adding Age groups to data
