@@ -38,7 +38,7 @@ clinical_data <- clinical %>%
 
 # Convert to numeric or binary
 clinical_data <- clinical_data %>%
-  mutate(Gender_bin = ifelse(Gender == "FEMALE", 1, 0),
+  mutate(Gender_bin = if_else(Gender == "FEMALE", 1, 0),
          ER_Status_bin = ifelse(`ER Status` == "Negative", 0, 1),
          PR_Status_bin = ifelse(`PR Status` == "Negative", 0, 1),
          HER2_Final_Status_bin = ifelse(`HER2 Final Status` == "Negative", 0, 1),
