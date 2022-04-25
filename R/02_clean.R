@@ -43,9 +43,9 @@ clinical_data <- clinical_data %>%
          HER2_Final_Status_bin = ifelse(`HER2 Final Status` == "Negative", 0, 1),
          Tumor_num = as.numeric(str_replace(Tumor, "T", "")),
          Node_num = as.numeric(str_replace(Node, "N", "")),
-         Metastasis_num = as.numeric(str_replace(Metastasis, "M", ""))) %>%
-  select(., 
-         -c(`Tumor--T1 Coded`, `Node-Coded`, `Metastasis-Coded`)) 
+         Metastasis_num = as.numeric(str_replace(Metastasis, "M", ""))) #%>%
+  #select(., 
+  #       -c(`Tumor--T1 Coded`, `Node-Coded`, `Metastasis-Coded`)) 
 
 
 # Transpose proteosome data
