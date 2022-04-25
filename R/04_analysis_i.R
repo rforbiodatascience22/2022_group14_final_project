@@ -41,10 +41,11 @@ p2 <- clean_clinical_data %>%
           ggplot(aes(x = `AJCC Stage`,
                      fill = `AJCC Stage`)) +
           geom_bar() +
-          theme_bw(base_size = 7,
-                   base_family = "") + 
+          theme_bw(base_size = 14,
+                   base_family = "") +
+          scale_x_discrete(guide = guide_axis(angle = 45))+
           #scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) + 
-          labs(title = "Boxplot over tumor stages", ,
+          labs(title = "Barplot over tumor stages", ,
                fill = "AJCC Stage",
                y = "Frequency")
 
