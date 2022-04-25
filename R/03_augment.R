@@ -59,5 +59,5 @@ clinical_data <- clinical_data %>%
 
 
 # Write data --------------------------------------------------------------
-write_tsv(x = my_data_clean_aug,
-          file = "data/03_my_data_clean_aug.tsv")
+write_tsv(x = cleaned_joined_data,
+          file = "data/03_joined_clean_aug_data.tsv")
