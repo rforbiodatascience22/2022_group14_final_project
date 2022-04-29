@@ -10,7 +10,7 @@ source(file = "R/99_project_functions.R")
 
 
 # Load data ---------------------------------------------------------------
-#my_data_clean_aug <- read_tsv(file = "data/03_my_data_clean_aug.tsv")
+joined_aug_data <- read_tsv(file = "data/03_joined_clean_aug_data.tsv") #tsv
 clean_proteosome_data <- read_tsv(file = "data/02_proteosome_data.tsv") #tsv
 clean_clinical_data <- read_tsv(file = "data/02_clinical_data.tsv") #tsv
 
