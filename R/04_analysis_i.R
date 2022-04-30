@@ -33,7 +33,7 @@ p1 <- clean_clinical_data %>%
           theme_bw(base_size = 8,
                    base_family = "") + 
           scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) + 
-          labs(title = "Boxplot over classifical of breast cancer subtypes", 
+          labs(title = "Boxplot over classification of breast cancer subtypes", 
                subtitle = "by PAM50 classification system",
                fill = "PAM50 classes")
 
@@ -66,7 +66,7 @@ p3 <- clean_clinical_data %>%
 
 # Write data --------------------------------------------------------------
 #write_tsv(...)
-# ggsave(p1, path = "results", filename = "boxPlotPAM50.png")
+#ggsave(p1, path = "results", filename = "boxPlotPAM50.png")
 # ggsave(p2, path = "results", filename = "barPlotTumorStage.png")
 # ggsave(p3, path = "results", filename = "piePlotPAM50.png")
 
