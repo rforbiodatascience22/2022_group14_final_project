@@ -66,7 +66,15 @@ p4
 
 
 
-
+p5 <- clean_joined_data %>% 
+  ggplot(mapping = aes(x= `AJCC Stage`, fill = as.factor(Tumor))) +
+  geom_bar() + 
+  scale_fill_hue(c=45,l=80)+
+  labs(title = "Barplot of Tumor amount in different AJCC stages",
+       y = "Frequency",
+       x = "AJCC stage",
+       fill = "Tumor amount")
+p5
 
 p1 + p2
 
