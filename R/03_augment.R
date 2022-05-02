@@ -38,7 +38,6 @@ clinical_data <- clinical_data %>%
     `Age at Initial Pathologic Diagnosis` >= 80 ~ "80+"))
 
 
-
 # PROTEOMES DATA
 # Transpose proteosome data
 prot <- proteome_data %>% 
@@ -69,22 +68,12 @@ data_coloumns <- joined_data %>%
   colnames()
 
 
-
 #to check
 temp <- joined_data %>% select(data_coloumns) %>% filter(.,rowSums(is.na(.)) !=ncol(.))
-  
 
-cleaned_joined_data <- joined_data %>% drop_na("NP_958782")
-
-
-    
-# Adding Age groups to data
-
-# Augment data ---------------------------------------------------------
-
-
+clean_joined_data <- joined_data %>% drop_na("NP_958782")
 
 # Write data --------------------------------------------------------------
-write_tsv(x = cleaned_joined_data,
+write_tsv(x = clean_joined_data,
           file = "data/03_joined_clean_aug_data.tsv")
 
