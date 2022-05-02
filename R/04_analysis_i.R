@@ -14,7 +14,23 @@ clean_joined_data <- read_tsv(file = "data/03_joined_clean_aug_data.tsv") #tsv
 clean_proteosome_data <- read_tsv(file = "data/02_proteosome_data.tsv") #tsv
 clean_clinical_data <- read_tsv(file = "data/02_clinical_data.tsv") #tsv
 
-view(clean_joined_data)
+# Exploring the data ------------------------------------------------------
+# Number of columns and rows
+nrow(clean_joined_data) #77 observations
+ncol(clean_joined_data) #12579 variables
+
+# Amount of individuals in each age group
+clean_joined_data %>% 
+  group_by(Age_groups) %>% 
+  count()
+
+# Gender data
+clean_joined_data %>%
+  count(Gender)
+
+# Survival rate
+clean_joined_data %>% count(`OS event`)
+
 # Visualise data ----------------------------------------------------------
 p1 <- clean_joined_data %>%
           ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
@@ -27,7 +43,6 @@ p1 <- clean_joined_data %>%
           labs(title = "Boxplot over classification of breast cancer subtypes", 
                subtitle = "by PAM50 classification system",
                fill = "PAM50 classes")
-p1
 
 p2 <- clean_clinical_data %>%
           ggplot(aes(x = `AJCC Stage`,
@@ -53,7 +68,6 @@ p3 <- clean_clinical_data %>%
           theme_bw() +
           labs(y = "",
                x = "")
-p1 + p2
 
 # Write data --------------------------------------------------------------
 #write_tsv(...)
