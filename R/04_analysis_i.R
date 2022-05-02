@@ -63,6 +63,18 @@ p3 <- clean_clinical_data %>%
           labs(y = "",
                x = "")
 
+p4 <- clean_joined_data %>% 
+  ggplot(mapping = aes(x=reorder(Age_groups, Age_groups, function(x)-length(x)), fill = `PAM50 mRNA`)) +
+  geom_bar() + 
+  scale_fill_hue(c=45,l=80)+
+  labs(title = "Barplot of cancer subtyped on PAM50 mRNA",
+       y = "Frequency",
+       x = "Age Group")
+p4
+
+
+
+
 
 # Write data --------------------------------------------------------------
 #write_tsv(...)
