@@ -14,18 +14,9 @@ clean_joined_data <- read_tsv(file = "data/03_joined_clean_aug_data.tsv") #tsv
 clean_proteosome_data <- read_tsv(file = "data/02_proteosome_data.tsv") #tsv
 clean_clinical_data <- read_tsv(file = "data/02_clinical_data.tsv") #tsv
 
-
-# Wrangle data ------------------------------------------------------------
-#my_data_clean_aug %>% ...
-
-
-# Model data
-#my_data_clean_aug %>% ...
-
-
+view(clean_joined_data)
 # Visualise data ----------------------------------------------------------
-#my_data_clean_aug %>% ...
-p1 <- clean_clinical_data %>%
+p1 <- clean_joined_data %>%
           ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
                      y = `PAM50 mRNA`,
                      fill = `PAM50 mRNA`)) +
@@ -36,6 +27,7 @@ p1 <- clean_clinical_data %>%
           labs(title = "Boxplot over classification of breast cancer subtypes", 
                subtitle = "by PAM50 classification system",
                fill = "PAM50 classes")
+p1
 
 p2 <- clean_clinical_data %>%
           ggplot(aes(x = `AJCC Stage`,
@@ -49,7 +41,6 @@ p2 <- clean_clinical_data %>%
                fill = "AJCC Stage",
                y = "Frequency")
 
-
 p3 <- clean_clinical_data %>%
           ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
                      y = `PAM50 mRNA`,
@@ -62,7 +53,7 @@ p3 <- clean_clinical_data %>%
           theme_bw() +
           labs(y = "",
                x = "")
-
+p1 + p2
 
 # Write data --------------------------------------------------------------
 #write_tsv(...)
