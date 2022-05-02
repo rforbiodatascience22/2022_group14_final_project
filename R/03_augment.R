@@ -25,7 +25,10 @@ clinical_data <- clinical_data %>%
          Metastasis = as.numeric(str_replace(Metastasis, "M", ""))) %>%
   select(., -c(`Tumor--T1 Coded`, 
                `Node-Coded`, 
-               `Metastasis-Coded`)) 
+               `Metastasis-Coded`,
+               `Vital Status`,
+               `Days to Date of Last Contact`, 
+               `Days to date of Death`)) 
 
 # Add age groups to clinical data
 clinical_data <- clinical_data %>% 
