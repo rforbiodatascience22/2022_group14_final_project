@@ -40,7 +40,6 @@ clinical_data <- clinical_data %>%
 
 
 # PROTEOMES DATA
-
 # Transpose proteosome data
 prot <- proteome_data %>% 
   pivot_longer(cols = -c("RefSeq_accession_number"), 
@@ -50,6 +49,8 @@ prot <- proteome_data %>%
 prot <- prot %>% 
   pivot_wider(names_from ="RefSeq_accession_number", 
               values_from = "value" )
+
+# Until here the number is 
 
 
 # JOINED DATA 
