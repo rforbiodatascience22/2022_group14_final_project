@@ -9,14 +9,13 @@ source(file = "R/99_project_functions.R")
 # Load data ---------------------------------------------------------------
 
 clinical_data <- read_tsv(file = "data/02_clinical_data.tsv")
-<<<<<<< HEAD
 proteome <- read_tsv(file = "data/02_proteosome_data.tsv")
-=======
 proteome_data <- read_tsv(file = "data/02_proteome_data.tsv")
->>>>>>> 6c04e2234e32954a58fc2741187a04ab062c3417
+
 
 
 # Wrangle data ------------------------------------------------------------
+
 
 
 # Transpose proteosome data
@@ -28,6 +27,25 @@ data = clinical %>% left_join(prot, copy = T)
 
 
 # Adding Age groups to data
+
+# CLINICALS DATA 
+# Binarize genders and HER2 stores, tumor, node and metastasis change to numeric
+clinical_data <- clinical_data %>%
+  mutate(Gender = case_when(Gender == "FEMALE" ~1, 
+                            Gender == "MALE" ~ 0),
+         HER2_binary = case_when(`HER2 Final Status` == "Negative" ~ 0,
+                                 `HER2 Final Status` == "Positive" ~ 1), #This adds NA for equivocal
+         Tumor = as.numeric(str_replace(Tumor, "T", "")),
+         Node = as.numeric(str_replace(Node, "N", "")),
+         Metastasis = as.numeric(str_replace(Metastasis, "M", ""))) %>%
+  select(., -c(`Tumor--T1 Coded`, 
+               `Node-Coded`, 
+               `Metastasis-Coded`,
+               `Vital Status`,
+               `Days to Date of Last Contact`, 
+               `Days to date of Death`)) 
+
+# Add age groups to clinical data
 clinical_data <- clinical_data %>% 
   mutate(Age_groups = case_when(
     30 <= `Age at Initial Pathologic Diagnosis` & `Age at Initial Pathologic Diagnosis`< 40 ~ "30-40",
