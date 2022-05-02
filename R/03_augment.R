@@ -9,7 +9,11 @@ source(file = "R/99_project_functions.R")
 # Load data ---------------------------------------------------------------
 
 clinical_data <- read_tsv(file = "data/02_clinical_data.tsv")
+<<<<<<< HEAD
 proteome <- read_tsv(file = "data/02_proteosome_data.tsv")
+=======
+proteome_data <- read_tsv(file = "data/02_proteome_data.tsv")
+>>>>>>> 6c04e2234e32954a58fc2741187a04ab062c3417
 
 
 # Wrangle data ------------------------------------------------------------
@@ -34,10 +38,52 @@ clinical_data <- clinical_data %>%
     `Age at Initial Pathologic Diagnosis` >= 80 ~ "80+"))
 
 
+
 # Augment data ---------------------------------------------------------
 
 
+# PROTEOMES DATA
+# Transpose proteosome data
+prot <- proteome_data %>% 
+  pivot_longer(cols = -c("RefSeq_accession_number"), 
+               names_to = "Complete TCGA ID", 
+               values_to = "value")
+
+prot <- prot %>% 
+  pivot_wider(names_from ="RefSeq_accession_number", 
+              values_from = "value" )
+
+# Until here the number is 
+
+
+# JOINED DATA 
+# Join proteosome and clinical data by "Complete TCGA ID"
+joined_data = clinical_data %>% left_join(prot, copy = T)
+
+
+#view(joined_data)
+#by row 
+#all v-type colums 
+#  if all == NA 
+#    then rm 
+
+data_coloumns <- joined_data %>% 
+  select(matches("NP_\\d+")) %>%
+  colnames()
+
+
+#to check
+temp <- joined_data %>% select(data_coloumns) %>% filter(.,rowSums(is.na(.)) !=ncol(.))
+
+
+clean_joined_data <- joined_data %>% drop_na("NP_958782")
 
 # Write data --------------------------------------------------------------
+
 write_tsv(x = my_data_clean_aug,
           file = "data/03_my_data_clean_aug.tsv")
+
+write_tsv(x = clean_joined_data,
+          file = "data/03_joined_clean_aug_data.tsv")
+
+
