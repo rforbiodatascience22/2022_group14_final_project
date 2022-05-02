@@ -59,7 +59,7 @@ p4 <- clean_joined_data %>%
   ggplot(mapping = aes(x=reorder(Age_groups, Age_groups, function(x)-length(x)), fill = `PAM50 mRNA`)) +
   geom_bar() + 
   scale_fill_hue(c=45,l=80)+
-  labs(title = "Barplot of cancer subtyped on PAM50 mRNA",
+  labs(title = "Cancer subtyped on PAM50 mRNA",
        y = "Frequency",
        x = "Age Group")
 p4
@@ -70,10 +70,10 @@ p5 <- clean_joined_data %>%
   ggplot(mapping = aes(x= `AJCC Stage`, fill = as.factor(Tumor))) +
   geom_bar() + 
   scale_fill_hue(c=45,l=80)+
-  labs(title = "Barplot of Tumor amount in different AJCC stages",
+  labs(title = "Number of tumors in different AJCC stages",
        y = "Frequency",
        x = "AJCC stage",
-       fill = "Tumor amount")
+       fill = "No. of tumors")
 p5
 
 p1 + p2
