@@ -23,6 +23,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 - PAM50 classification of breast cancer subtypes
 
+rawclinicaldata <- read.csv("data/_raw/clinical_data_breast_cancer.csv")
+View(rawclinicaldata)
+
 ![Plot1](../results/boxPlotPAM50.png){width=500px, height=400px}
 
 ## Results
