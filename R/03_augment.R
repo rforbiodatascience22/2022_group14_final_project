@@ -8,7 +8,7 @@ source(file = "R/99_project_functions.R")
 # Load data ---------------------------------------------------------------
 
 clinical_data <- read_tsv(file = "data/02_clinical_data.tsv")
-proteome_data <- read_tsv(file = "data/02_proteosome_data.tsv")
+proteome_data <- read_tsv(file = "data/02_proteome_data.tsv")
 
 
 # Wrangle data ------------------------------------------------------------
@@ -64,13 +64,18 @@ joined_data = clinical_data %>% left_join(prot, copy = T)
 #  if all == NA 
 #    then rm 
 
-#data_coloumns <- joined_data %>% 
-#  select(matches("V\\d+")) %>%
-#  colnames()
+data_coloumns <- joined_data %>% 
+  select(matches("NP_\\d+")) %>%
+  colnames()
 
-#here we need to fix that NP_958782 dosn't represent all the genes
-#and alone decides if the row goes out 
+
+
+#to check
+temp <- joined_data %>% select(data_coloumns) %>% filter(.,rowSums(is.na(.)) !=ncol(.))
+  
+
 cleaned_joined_data <- joined_data %>% drop_na("NP_958782")
+
 
     
 # Adding Age groups to data
@@ -82,3 +87,4 @@ cleaned_joined_data <- joined_data %>% drop_na("NP_958782")
 # Write data --------------------------------------------------------------
 write_tsv(x = cleaned_joined_data,
           file = "data/03_joined_clean_aug_data.tsv")
+
