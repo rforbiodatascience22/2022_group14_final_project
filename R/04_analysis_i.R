@@ -14,18 +14,9 @@ clean_joined_data <- read_tsv(file = "data/03_joined_clean_aug_data.tsv") #tsv
 clean_proteosome_data <- read_tsv(file = "data/02_proteosome_data.tsv") #tsv
 clean_clinical_data <- read_tsv(file = "data/02_clinical_data.tsv") #tsv
 
-
-# Wrangle data ------------------------------------------------------------
-#my_data_clean_aug %>% ...
-
-
-# Model data
-#my_data_clean_aug %>% ...
-
-
+view(clean_joined_data)
 # Visualise data ----------------------------------------------------------
-#my_data_clean_aug %>% ...
-p1 <- clean_clinical_data %>%
+p1 <- clean_joined_data %>%
           ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
                      y = `PAM50 mRNA`,
                      fill = `PAM50 mRNA`)) +
@@ -36,6 +27,7 @@ p1 <- clean_clinical_data %>%
           labs(title = "Boxplot over classification of breast cancer subtypes", 
                subtitle = "by PAM50 classification system",
                fill = "PAM50 classes")
+p1
 
 p2 <- clean_clinical_data %>%
           ggplot(aes(x = `AJCC Stage`,
@@ -47,7 +39,6 @@ p2 <- clean_clinical_data %>%
           labs(title = "Boxplot over tumor stages", ,
                fill = "AJCC Stage",
                y = "Frequency")
-
 
 p3 <- clean_clinical_data %>%
           ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
@@ -62,6 +53,29 @@ p3 <- clean_clinical_data %>%
           labs(y = "",
                x = "")
 
+
+p4 <- clean_joined_data %>% 
+  ggplot(mapping = aes(x=reorder(Age_groups, Age_groups, function(x)-length(x)), fill = `PAM50 mRNA`)) +
+  geom_bar() + 
+  scale_fill_hue(c=45,l=80)+
+  labs(title = "Barplot of cancer subtyped on PAM50 mRNA",
+       y = "Frequency",
+       x = "Age Group")
+p4
+
+
+
+p5 <- clean_joined_data %>% 
+  ggplot(mapping = aes(x= `AJCC Stage`, fill = as.factor(Tumor))) +
+  geom_bar() + 
+  scale_fill_hue(c=45,l=80)+
+  labs(title = "Barplot of Tumor amount in different AJCC stages",
+       y = "Frequency",
+       x = "AJCC stage",
+       fill = "Tumor amount")
+p5
+
+p1 + p2
 
 # Write data --------------------------------------------------------------
 #write_tsv(...)
