@@ -8,7 +8,7 @@ source(file = "R/99_project_functions.R")
 # Load data ---------------------------------------------------------------
 
 clinical_data <- read_tsv(file = "data/02_clinical_data.tsv")
-proteome_data <- read_tsv(file = "data/02_proteosome_data.tsv")
+proteome_data <- read_tsv(file = "data/02_proteome_data.tsv")
 
 
 # Wrangle data ------------------------------------------------------------
@@ -64,7 +64,7 @@ joined_data = clinical_data %>% left_join(prot, copy = T)
 #    then rm 
 
 data_coloumns <- joined_data %>% 
-  select(matches("V\\d+")) %>%
+  select(matches("NP_\\d+")) %>%
   colnames()
 
 
@@ -86,3 +86,4 @@ cleaned_joined_data <- joined_data %>% drop_na("NP_958782")
 # Write data --------------------------------------------------------------
 write_tsv(x = cleaned_joined_data,
           file = "data/03_joined_clean_aug_data.tsv")
+
