@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 - PAM50 classification of breast cancer subtypes
 
-![](../results/boxPlotPAM50.png){width=500px, height=400px}
+![Plot1](../results/boxPlotPAM50.png){width=500px, height=400px}
 
 ## Results
 
