@@ -65,7 +65,8 @@ p4 <- clean_joined_data %>%
   geom_bar() + 
   scale_fill_hue(c=45,
                  l=80) +
-  labs(title = "Barplot of cancer subtyped on PAM50 mRNA",
+  scale_fill_hue(c=45,l=80)+
+  labs(title = "Cancer subtyped on PAM50 mRNA",
        y = "Frequency",
        x = "Age Group") + 
   theme(axis.text.x = element_text(size = 7),
@@ -80,12 +81,13 @@ p5 <- clean_joined_data %>%
   geom_bar() + 
   scale_fill_hue(c = 45,
                  l = 80)+
-  labs(title = "Barplot of tumor amount in different AJCC stages",
-       y = "Frequency",
-       x = "AJCC stage",
-       fill = "Tumor amount") + 
   theme(axis.text.x = element_text(size = 7),
         axis.text.y = element_text(size = 7))
+  scale_fill_hue(c=45,l=80)+
+  labs(title = "Number of tumors in different AJCC stages",
+       y = "Frequency",
+       x = "AJCC stage",
+       fill = "No. of tumors")
 p5
 
 
