@@ -65,7 +65,6 @@ p4 <- clean_joined_data %>%
   geom_bar() + 
   scale_fill_hue(c=45,
                  l=80) +
-  scale_fill_hue(c=45,l=80)+
   labs(title = "Cancer subtyped on PAM50 mRNA",
        y = "Frequency",
        x = "Age Group") + 
@@ -80,10 +79,11 @@ p5 <- clean_joined_data %>%
              fill = as.factor(Tumor))) +
   geom_bar() + 
   scale_fill_hue(c = 45,
-                 l = 80)+
+                 l = 80) +
   theme(axis.text.x = element_text(size = 7),
-        axis.text.y = element_text(size = 7))
-  scale_fill_hue(c=45,l=80)+
+        axis.text.y = element_text(size = 7)) + 
+  scale_fill_hue(c = 45,
+                 l = 80) +
   labs(title = "Number of tumors in different AJCC stages",
        y = "Frequency",
        x = "AJCC stage",
@@ -92,13 +92,14 @@ p5
 
 
 
-# Write data --------------------------------------------------------------
-#write_tsv(...)
-# ggsave(p1, path = "results", filename = "boxPlotPAM50.png")
-# ggsave(p2, path = "results", filename = "barPlotTumorStage.png")
-# ggsave(p3, path = "results", filename = "piePlotPAM50.png")
-# ggsave(p4, path = "results", filename = "barPlotAgeGroupPAM50.png")
-# ggsave(p5, path = "results", filename = "barPlotAJJCTumor.png")
+# Save plots --------------------------------------------------------------
+ggsave(p1, path = "results", filename = "boxPlotPAM50.png")
+ggsave(p2, path = "results", filename = "barPlotTumorStage.png")
+ggsave(p3, path = "results", filename = "piePlotPAM50.png")
+ggsave(p4, path = "results", filename = "barPlotAgeGroupPAM50.png")
+ggsave(p5, path = "results", filename = "barPlotAJJCTumor.png")
+
+
 
 
 # PCA ---------------------------------------------------------------------
@@ -121,6 +122,56 @@ pca_fit <- clean_proteosome_data %>%
   drop_na() %>%
   prcomp(scale=TRUE) # do PCA on scaled data
 
+
+# define arrow style for plotting
+arrow_style <- arrow(
+  angle = 20, ends = "first", type = "closed", length = grid::unit(8, "pt")
+)
+
+# plot rotation matrix
+pcaArrowPlot <- pca_fit %>%
+  tidy(matrix = "rotation") %>%
+  pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value") %>%
+  ggplot(aes(PC1, PC2)) +
+  geom_segment(xend = 0, yend = 0, arrow = arrow_style) +
+  geom_text(
+    aes(label = column),
+    hjust = 1, nudge_x = -0.02, 
+    color = "#904C2F", 
+    size = 2.25
+  ) +
+  xlim(-0.3, 0.05) + ylim(-0.25, 0.25) +
+  coord_fixed()# + # fix aspect ratio to 1:1
+  #theme_minimal_grid(12)
+pcaArrowPlot
+
+
+pcaFit <- pca_fit %>%
+  tidy(matrix = "eigenvalues") %>%
+  ggplot(aes(PC, percent)) +
+  geom_col(fill = "#56B4E9", alpha = 0.8) +
+  scale_x_continuous(breaks = 1:length(pca_fit$sdev)) +
+  scale_y_continuous(
+    labels = scales::percent_format(),
+    expand = expansion(mult = c(0, 0.01))
+  ) +
+  labs(title = "Variance explained by each PC",
+       y = "Percent",
+       x = "PC") +
+  theme(axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5)) + 
+  scale_fill_hue(c = 45,
+                 l = 80) 
+pcaFit
+
+# Save plots --------------------------------------------------------------
+ggsave(pcaArrowPlot, path = "results", filename = "pcaRotationMatrix.png")
+ggsave(pcaFit, path = "results", filename = "pcaFit.png")
+
+
+
+
+
 # clean_proteosome_data <- clean_proteosome_data %>%
 #   drop_na()
 # 
@@ -132,37 +183,3 @@ pca_fit <- clean_proteosome_data %>%
 #   #   values = c(malignant = "#D55E00", benign = "#0072B2")
 #   # ) +
 #   theme_half_open(12) + background_grid()
-
-
-# define arrow style for plotting
-arrow_style <- arrow(
-  angle = 20, ends = "first", type = "closed", length = grid::unit(8, "pt")
-)
-
-# plot rotation matrix
-pca_fit %>%
-  tidy(matrix = "rotation") %>%
-  pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value") %>%
-  ggplot(aes(PC1, PC2)) +
-  geom_segment(xend = 0, yend = 0, arrow = arrow_style) +
-  geom_text(
-    aes(label = column),
-    hjust = 1, nudge_x = -0.02, 
-    color = "#904C2F", 
-    size = 2.5
-  ) +
-  xlim(-0.3, 0.05) + ylim(-0.25, 0.25) +
-  coord_fixed() + # fix aspect ratio to 1:1
-  theme_minimal_grid(12)
-
-
-pca_fit %>%
-  tidy(matrix = "eigenvalues") %>%
-  ggplot(aes(PC, percent)) +
-  geom_col(fill = "#56B4E9", alpha = 0.8) +
-  scale_x_continuous(breaks = 1:84) +
-  scale_y_continuous(
-    labels = scales::percent_format(),
-    expand = expansion(mult = c(0, 0.01))
-  ) +
-  theme_minimal_hgrid(12)
