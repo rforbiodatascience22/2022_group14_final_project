@@ -1,7 +1,12 @@
+# Load libraries ----------------------------------------------------------
+library("tidyverse")
+library(ggplot2)
+library(scales)
+library(broom)  
+library(cowplot)
 
+#Load data ---------------------------------------------------------------
 clean_joined_data_healthy <- read_tsv(file = "data/03_clinical_clean_aug_data_healthy.tsv")
-
-
 
 
 # Pull names from clean joined data
@@ -31,7 +36,6 @@ write_tsv(x = healthyProteomeDataLong,
 
 
 ## Now time for PCA
-
 pca_fit <- healthyProteomeDataLong %>% 
   select(where(is.numeric)) %>% # retain only numeric columns
   drop_na() %>%
@@ -92,10 +96,9 @@ pcaBarPlot <- pca_fit %>%
   scale_fill_hue(c = 45,
                  l = 80)
 
-
+# Write data ---------------------------------------------------------------
 ggsave(pcaArrowPlot, path = "results", filename = "pcaRotationMatrix.png")
 ggsave(pcaBarPlot, path = "results", filename = "pcaFit.png")
-
 
 # Save PCA fit for clustering
 write_tsv(x =  pca_fit %>%
