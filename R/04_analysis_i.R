@@ -88,9 +88,10 @@ p1 + p2
 
 # PCA ---------------------------------------------------------------------
 
-pca_fit <- clean_proteosome_data %>% 
-  select(where(is.numeric)) %>% # retain only numeric columns
-  drop_na() %>%
+pca_fit <- clean_joined_data %>% 
+  select(starts_with("NP_")) %>%
+  select(where(is.numeric)) %>% 
+  drop_na() %>% 
   prcomp(scale=TRUE) # do PCA on scaled data
 
 clean_proteosome_data <- clean_proteosome_data %>%
