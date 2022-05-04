@@ -94,6 +94,7 @@ tumor_vs_pam50 <- clean_joined_data %>%
 
 tumor_vs_pam50
 
+p5
 
 
 # Write data --------------------------------------------------------------
@@ -101,7 +102,8 @@ tumor_vs_pam50
 #ggsave(p1, path = "results", filename = "boxPlotPAM50.png")
 # ggsave(p2, path = "results", filename = "barPlotTumorStage.png")
 # ggsave(p3, path = "results", filename = "piePlotPAM50.png")
-
+ggsave(p4, path = "results", filename = "barPlotcancersubtypedPAM50.png")
+ggsave(p5, path = "results", filename = "barPlotAJCCTumorAmount.png")
 
 
 # PCA ---------------------------------------------------------------------
