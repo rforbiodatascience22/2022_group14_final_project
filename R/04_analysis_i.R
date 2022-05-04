@@ -5,8 +5,6 @@ library(scales)
 library(broom)  
 library(cowplot)
 
-# Define functions --------------------------------------------------------
-source(file = "R/99_project_functions.R")
 
 
 # Load data ---------------------------------------------------------------
@@ -33,63 +31,17 @@ clean_joined_data %>%
 clean_joined_data %>% count(`OS event`)
 
 # Visualise data ----------------------------------------------------------
-p1 <- clean_joined_data %>%
-  ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
-             y = `PAM50 mRNA`,
-             fill = `PAM50 mRNA`)) +
-  geom_boxplot() +
-  theme_bw(base_size = 8,
-           base_family = "") + 
-  scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) + 
-  labs(title = "Boxplot over classification of breast cancer subtypes", 
-       subtitle = "by PAM50 classification system",
-       fill = "PAM50 classes")
 
-p2 <- clean_clinical_data %>%
-  ggplot(aes(x = `AJCC Stage`,
-             fill = `AJCC Stage`)) +
-  geom_bar() +
-  theme_bw(base_size = 14,
-           base_family = "") +
-  scale_x_discrete(guide = guide_axis(angle = 45))+
-  #scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) + 
-  labs(title = "Barplot over tumor stages", ,
-       fill = "AJCC Stage",
-       y = "Frequency")
 
-          ggplot(aes(x = `AJCC Stage`,
-                     fill = `AJCC Stage`)) +
-          geom_bar() +
-          theme_bw(base_size = 14,
-                   base_family = "") +
-          scale_x_discrete(guide = guide_axis(angle = 45)) +
-          #scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) + 
-          labs(title = "Barplot over tumor stages", ,
-               fill = "AJCC Stage",
-               y = "Frequency")
-
-p3 <- clean_clinical_data %>%
-  ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
-             y = `PAM50 mRNA`,
-             fill = `PAM50 mRNA`)) +
-  geom_bar(width = 1,
-           stat = "identity") +
-  coord_polar("y",
-              start = 0) + 
-  scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) +
-  theme_bw() +
-  labs(y = "",
-       x = "")
-
-p4 <- clean_joined_data %>% 
+age_subtype_plot <- clean_joined_data %>% 
   ggplot(mapping = aes(x=reorder(Age_groups, Age_groups, function(x)-length(x)), fill = `PAM50 mRNA`)) +
   geom_bar() + 
   scale_fill_hue(c=45,l=80)+
   labs(title = "Barplot of cancer subtyped on PAM50 mRNA",
        y = "Frequency",
        x = "Age Group")
-p4
-p5 <- clean_joined_data %>% 
+
+tumor_amount_stage_plot <- clean_joined_data %>% 
   ggplot(mapping = aes(x= `AJCC Stage`, fill = as.factor(Tumor))) +
   geom_bar() + 
   scale_fill_hue(c=45,l=80)+
@@ -104,19 +56,13 @@ tumor_vs_pam50 <- clean_joined_data %>%
   ggplot(mapping = aes(x= `PAM50 mRNA`, fill = as.factor(Tumor))) +
   geom_bar()
 
-tumor_vs_pam50
-
-p5
 
 
 
 # Write data --------------------------------------------------------------
-#write_tsv(...)
-#ggsave(p1, path = "results", filename = "boxPlotPAM50.png")
-# ggsave(p2, path = "results", filename = "barPlotTumorStage.png")
-# ggsave(p3, path = "results", filename = "piePlotPAM50.png")
-#ggsave(p4, path = "results", filename = "barPlotcancersubtypedPAM50.png")
-#ggsave(p5, path = "results", filename = "barPlotAJCCTumorAmount.png")
+
+#ggsave(age_subtype_plot, path = "results", filename = "barPlotcancersubtypedPAM50.png")
+#ggsave(tumor_amount_stage_plot, path = "results", filename = "barPlotAJCCTumorAmount.png")
 
 
 # PCA ---------------------------------------------------------------------
