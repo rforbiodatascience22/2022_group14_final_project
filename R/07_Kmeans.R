@@ -1,11 +1,15 @@
+# Load libraries ----------------------------------------------------------
+library("tidyverse")
+library(ggplot2)
+library(scales)
+library(broom)  
+library(cowplot)
 
-#loading data 
-
+#Load data ---------------------------------------------------------------
 healthyProteomeDataLong <- read_tsv(file = "data/06_healthy_proteome_data_long.tsv")
 pca_fit < read_tsv(file = "data/06_PCA_fit_rotation.tsv")
 
-# Now time for K-means clustering
-
+# K-means clustering
 kmeans_data <- pca_fit %>%
   augment(healthyProteomeDataLong)
 
@@ -18,7 +22,6 @@ k_pca_aug1 <- cluster1 %>%
   rename(Cluster1 = .cluster)
 
 #K-means clustering round 2
-
 cluster2 <- k_pca_aug1 %>%
   select(.fittedPC1, .fittedPC2) %>%
   kmeans(centers = 5)
@@ -29,8 +32,6 @@ k_pca_aug2 <- cluster2 %>%
 
 
 # Visualise K-means clustering data ----------------------------------------------------------
-
-
 kplot1 <- k_pca_aug1 %>%
   ggplot(aes(x=.fittedPC1, y=.fittedPC2, color=Cluster1)) +
   geom_point() +
