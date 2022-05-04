@@ -109,6 +109,19 @@ ggsave(p5, path = "results", filename = "barPlotAJCCTumorAmount.png")
 
 # PCA ---------------------------------------------------------------------
 # First transpose data
+# bla = clean_proteosome_data %>%
+#   pivot_longer(cols = -(`Complete TCGA ID`), 
+#                names_to = "RefSeqProteinID", 
+#                values_to = "Value")
+# 
+# pca_fit <- bla %>% 
+#   select(where(is.numeric)) %>% # retain only numeric columns
+#   drop_na() %>%
+#   prcomp(scale=TRUE) # do PCA on scaled data
+
+
+
+
 newnames <- clean_joined_data_healthy$`Complete TCGA ID`
 clean_joined_data_healthy <- clean_joined_data_healthy %>%
   select(starts_with("NP_"))
@@ -116,7 +129,7 @@ clean_joined_data_healthy_t <- as_tibble(cbind(`RefSeqProteinID` = names(clean_j
 
 # Renaming columns
 #oldnames <- names(clean_joined_data_healthy_t)
-names(clean_joined_data_healthy_t) = newnames
+names(clean_joined_data_healthy_t) = c("RefSeqProteinID", newnames)
 clean_joined_data_healthy_t <- clean_joined_data_healthy_t %>%
   select(!starts_with("Ref")) %>%
   mutate_if(is.character, as.numeric) 
