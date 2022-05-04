@@ -16,9 +16,9 @@ proteins <- read_tsv(file = "data/proteins.tsv")
 
 # PROTEOMES FILE
 # Remove first 3 columns, rename the columns and remove duplicate columns
-proteome_data <- proteomes %>% #We remove the names cause this just doesn't fit with our shit
-  select(-c("AO-A12D.05TCGA", #There are two samples taken from these three patients. We removed the second sample
-            "C8-A131.32TCGA", # This to not overrepresent for data bias.
+proteome_data <- proteomes %>% 
+  select(-c("AO-A12D.05TCGA", 
+            "C8-A131.32TCGA", 
             "AO-A12B.34TCGA")) %>%
   rename_with( ~ str_replace_all(.,"\\..{6}","")) %>% 
   select(., -c(gene_symbol, 
