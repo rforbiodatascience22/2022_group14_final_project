@@ -91,4 +91,4 @@ heatmap_tumor <- cancer_genes %>%
 
 # Write data --------------------------------------------------------------
 ggsave(heatmap_pam50, path = "results", filename = "heatmapPAM50.png")
-
+ggsave(heatmap_tumor, path = "results", filename = "heatmaptumor.png")
