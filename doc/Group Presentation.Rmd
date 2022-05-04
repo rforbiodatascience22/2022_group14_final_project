@@ -75,6 +75,7 @@ proteomes_raw %>%
 ![](/cloud/project/results/workflowClean.png){width="700"}
 
 ## Methods: Augmenting data
+![](/cloud/project/results/WorkflowAugment.png){width="800"}
 
 ## Cancer subtypes in each age group
 
