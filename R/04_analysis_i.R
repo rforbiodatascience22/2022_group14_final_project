@@ -205,8 +205,51 @@ ggsave(pcaBarPlot, path = "results", filename = "pcaFit.png")
 
 
 # Save PCA fit for clustering
-write_tsv(x =  pca_fit %>%
-                    tidy(matrix = "rotation"),
-          file = "data/04_PCA_fit_rotation.tsv")
+#write_tsv(x =  pca_fit %>%
+ #           tidy(matrix = "rotation"),
+  #        file = "data/04_PCA_fit_rotation.tsv")
 
 
+# Now time for K-means clustering
+
+kmeans_data <- pca_fit %>%
+  augment(clean_joined_data_healthy_t)
+
+cluster1 <- kmeans_data %>%
+  select(.fittedPC1, .fittedPC2) %>%
+  kmeans(centers = 5)
+
+k_pca_aug1 <- cluster1 %>%
+  augment(kmeans_data) %>%
+  rename(Cluster1 = .cluster)
+
+colnames(k_pca_aug1)
+
+#K-means clustering round 2
+
+cluster2 <- k_pca_aug1 %>%
+  select(.fittedPC1, .fittedPC2) %>%
+  kmeans(centers = 5)
+
+k_pca_aug2 <- cluster2 %>%
+  augment(k_pca_aug1) %>%
+  rename(Cluster2 = .cluster)
+
+colnames(k_pca_aug2)
+
+# Visualise K-means clustering data ----------------------------------------------------------
+#my_data_clean_aug %>% ...
+  
+  kplot1 <- k_pca_aug1 %>%
+  ggplot(aes(x=.fittedPC1, y=.fittedPC2, color=Cluster1)) +
+  geom_point() +
+  theme(legend.position = "bottom")
+
+kplot1
+
+kplot2 <- k_pca_aug2 %>%
+  ggplot(aes(x=.fittedPC1, y=.fittedPC2, color=Cluster2)) +
+  geom_point() +
+  theme(legend.position = "bottom")
+
+kplot2
