@@ -3,9 +3,6 @@ library("tidyverse")
 library("dplyr")
 
 
-# Define functions --------------------------------------------------------
-source(file = "R/99_project_functions.R")
-
 
 # Load data ---------------------------------------------------------------
 proteomes <- read_tsv(file = "data/proteomes.tsv")

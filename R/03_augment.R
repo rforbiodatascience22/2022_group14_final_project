@@ -3,9 +3,6 @@ library("tidyverse")
 library("dplyr")
 
 
-# Define functions --------------------------------------------------------
-source(file = "R/99_project_functions.R")
-
 
 # Load data ---------------------------------------------------------------
 clinical_data <- read_tsv(file = "data/02_clinical_data.tsv")
