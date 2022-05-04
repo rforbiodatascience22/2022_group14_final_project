@@ -14,7 +14,7 @@ clean_joined_data <- read_tsv(file = "data/03_joined_clean_aug_data.tsv") #tsv
 clean_proteosome_data <- read_tsv(file = "data/02_proteome_data.tsv") #tsv
 clean_clinical_data <- read_tsv(file = "data/02_clinical_data.tsv") #tsv
 
-# view(clean_joined_data)
+clean_joined_data_heathy <- read_tsv(file = "data/03_joined_clean_aug_data_healthy.tsv")
 
 # Visualise data ----------------------------------------------------------
 p1 <- clean_joined_data %>%
@@ -113,7 +113,14 @@ ggsave(p5, path = "results", filename = "barPlotAJJCTumor.png")
 # 
 #   Pull those columns from the original data set
 #   drop NA from these
+
+
+#a test adding the healthy individuals 
   
+pca_healthy_fit <- clean_joined_data_heathy %>% 
+  select(starts_with("NP_")) %>% 
+  drop_na() %>%
+  prcomp(scale=TRUE) # do PCA on scaled data
 
 
 pca_fit <- clean_proteosome_data %>% 
