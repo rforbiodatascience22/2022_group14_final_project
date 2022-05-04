@@ -167,7 +167,7 @@ pca_fit %>%
 pca_fit %>%
   tidy(matrix = "eigenvalues") %>%
   ggplot(aes(PC, percent)) +
-  geom_col(fill = "#56B4E9", alpha = 0.8) +
+  geom_col(fill = "#16A205", alpha = 0.8) +
   scale_x_continuous(breaks = 1:84) +
   scale_y_continuous(
     labels = scales::percent_format(),
