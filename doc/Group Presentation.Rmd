@@ -63,7 +63,6 @@ Work in progress here!
 
     ## Discussion
 
-```{=html}
 <!-- -->
-```
+
 -   Work in progress here!
