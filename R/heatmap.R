@@ -15,7 +15,7 @@ clean_joined_data <- read_tsv(file = "data/03_joined_clean_aug_data.tsv")
 clean_proteome_data <- read_tsv(file = "data/03_proteome_clean_aug_data.tsv") 
 clean_clinical_data <- read_tsv(file = "data/03_clinical_clean_aug_data.tsv") 
 
-# Take inspiration from litrature and look at these spoecific breast cancer genes
+# Take inspiration from literature and look at these specific breast cancer genes
 # PTEN = NP_000305 
 # PIK3CA = NP_006209
 # CHEK2 = NP_009125 

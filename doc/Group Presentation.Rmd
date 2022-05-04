@@ -28,18 +28,21 @@ knitr::opts_chunk$set(echo = TRUE)
 +===========================================================+=====================+=====================+
 | Protein expression data                                   | 12553               | 86                  |
 |                                                           |                     |                     |
-| *iTRAQ proteome profiling*                                |                     |                     |
+| *iTRAQ proteome profiling from 77 patients*               |                     |                     |
 +-----------------------------------------------------------+---------------------+---------------------+
 | Clinical data                                             | 105                 | 30                  |
 |                                                           |                     |                     |
-| *Cancer classification of samples*                        |                     |                     |
-+-----------------------------------------------------------+---------------------+---------------------+
-| PAM50_proteins                                            | 100                 | 4                   |
-|                                                           |                     |                     |
-| *List of genes and proteins used by PAM50 classification* |                     |                     |
+| *Cancer classification of samples from 77 patients*       |                     |                     |
 +-----------------------------------------------------------+---------------------+---------------------+
 
-*Source: [Kaggle, of course!](https://www.kaggle.com/datasets/piotrgrabo/breastcancerproteomes)*
+
+*Source: [Kaggle](https://www.kaggle.com/datasets/piotrgrabo/breastcancerproteomes)*
+
+## Methods: Cleaning Data
+**Cleaning data**: 
+
+
+## Methods: Augmenting data
 
 ## Methods: analysis I
 
