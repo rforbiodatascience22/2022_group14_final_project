@@ -34,17 +34,23 @@ clean_joined_data %>% count(`OS event`)
 
 
 age_subtype_plot <- clean_joined_data %>% 
-  ggplot(mapping = aes(x=reorder(Age_groups, Age_groups, function(x)-length(x)), fill = `PAM50 mRNA`)) +
+  ggplot(mapping = aes(x = reorder(Age_groups, 
+                                 Age_groups, 
+                                 function(x)-length(x)),
+                       fill = `PAM50 mRNA`)) +
   geom_bar() + 
-  scale_fill_hue(c=45,l=80)+
+  scale_fill_hue(c = 45,
+                 l = 80)+
   labs(title = "Barplot of cancer subtyped on PAM50 mRNA",
        y = "Frequency",
        x = "Age Group")
 
 tumor_amount_stage_plot <- clean_joined_data %>% 
-  ggplot(mapping = aes(x= `AJCC Stage`, fill = as.factor(Tumor))) +
+  ggplot(mapping = aes(x = `AJCC Stage`, 
+                       fill = as.factor(Tumor))) +
   geom_bar() + 
-  scale_fill_hue(c=45,l=80)+
+  scale_fill_hue(c = 45,
+                 l = 80)+
   labs(title = "Barplot of Tumor amount in different AJCC stages",
        y = "Frequency",
        x = "AJCC stage",
@@ -53,7 +59,8 @@ tumor_amount_stage_plot <- clean_joined_data %>%
 #checking relation between tumor amount and PAM50 mRNA
 #and there dosn't seem to be a relation 
 tumor_vs_pam50 <- clean_joined_data %>% 
-  ggplot(mapping = aes(x= `PAM50 mRNA`, fill = as.factor(Tumor))) +
+  ggplot(mapping = aes( x= `PAM50 mRNA`, 
+                        fill = as.factor(Tumor))) +
   geom_bar()
 
 

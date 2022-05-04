@@ -14,7 +14,8 @@ kmeans_data <- pca_fit %>%
   augment(healthyProteomeDataLong)
 
 cluster1 <- kmeans_data %>%
-  select(.fittedPC1, .fittedPC2) %>%
+  select(.fittedPC1,
+         .fittedPC2) %>%
   kmeans(centers = 5)
 
 k_pca_aug1 <- cluster1 %>%
@@ -23,7 +24,8 @@ k_pca_aug1 <- cluster1 %>%
 
 #K-means clustering round 2
 cluster2 <- k_pca_aug1 %>%
-  select(.fittedPC1, .fittedPC2) %>%
+  select(.fittedPC1,
+         .fittedPC2) %>%
   kmeans(centers = 5)
 
 k_pca_aug2 <- cluster2 %>%
@@ -33,15 +35,22 @@ k_pca_aug2 <- cluster2 %>%
 
 # Visualise K-means clustering data ----------------------------------------------------------
 kplot1 <- k_pca_aug1 %>%
-  ggplot(aes(x=.fittedPC1, y=.fittedPC2, color=Cluster1)) +
+  ggplot(aes(x = .fittedPC1, 
+             y =.fittedPC2, 
+             color=Cluster1)) +
   geom_point() +
   theme(legend.position = "bottom")
 
 kplot1
 
 kplot2 <- k_pca_aug2 %>%
-  ggplot(aes(x=.fittedPC1, y=.fittedPC2, color=Cluster2)) +
+  ggplot(aes(x = .fittedPC1, 
+             y =.fittedPC2, 
+             color=Cluster2)) +
   geom_point() +
   theme(legend.position = "bottom")
 
 kplot2
+
+ggsave(kplot1, path = "results", filename = "kplot1.png")
+ggsave(kplot2, path = "results", filename = "kplot2.png")
