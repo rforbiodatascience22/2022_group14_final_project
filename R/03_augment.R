@@ -5,13 +5,26 @@ library("dplyr")
 # Define functions --------------------------------------------------------
 source(file = "R/99_project_functions.R")
 
+
 # Load data ---------------------------------------------------------------
 
 clinical_data <- read_tsv(file = "data/02_clinical_data.tsv")
+#proteome <- read_tsv(file = "data/02_proteosome_data.tsv")
 proteome_data <- read_tsv(file = "data/02_proteome_data.tsv")
 
 
+
 # Wrangle data ------------------------------------------------------------
+
+# Transpose proteosome data
+prot <- cbind("Complete TCGA ID" = names(proteome_data), t(proteome_data))
+
+# Join proteosome and clinical data by "Complete TCGA ID"
+data = clinical %>% left_join(prot, copy = T)
+
+
+
+# Adding Age groups to data
 
 # CLINICALS DATA 
 # Binarize genders and HER2 stores, tumor, node and metastasis change to numeric
@@ -41,6 +54,10 @@ clinical_data <- clinical_data %>%
     `Age at Initial Pathologic Diagnosis` >= 80 ~ "80+"))
 
 
+
+# Augment data ---------------------------------------------------------
+
+
 # PROTEOMES DATA
 # Transpose proteosome data
 prot <- proteome_data %>% 
@@ -60,6 +77,16 @@ prot <- prot %>%
 joined_data = clinical_data %>% left_join(prot, copy = T)
 
 
+## Extract healthy rows
+healthy_rows <- prot %>%
+  slice_tail(n = 3)
+  
+## Add healthy data rows to joined data
+joined_data_healthy <- joined_data %>%
+  add_row(healthy_rows)
+
+
+
 #view(joined_data)
 #by row 
 #all v-type colums 
@@ -74,9 +101,17 @@ data_coloumns <- joined_data %>%
 #to check
 temp <- joined_data %>% select(data_coloumns) %>% filter(.,rowSums(is.na(.)) !=ncol(.))
 
+
 clean_joined_data <- joined_data %>% drop_na("NP_958782")
+clean_joined_data_healthy <- joined_data_healthy %>% drop_na("NP_958782")
 
 # Write data --------------------------------------------------------------
 write_tsv(x = clean_joined_data,
           file = "data/03_joined_clean_aug_data.tsv")
+
+write_tsv(x = clean_joined_data_healthy,
+          file = "data/03_joined_clean_aug_data_healthy.tsv")
+
+
+
 
