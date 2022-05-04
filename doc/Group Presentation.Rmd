@@ -71,28 +71,33 @@ proteomes_raw %>%
 ```
 
 ## Method: Cleaning data
+
 ![](/cloud/project/results/workflowClean.png){width="700"}
 
 ## Methods: Augmenting data
 
-
-## Methods
-
-Loads of data cleaning! And it was fun.
-
-## Results I
+## Cancer subtypes in each age group
 
 ![](/cloud/project/results/barPlotcancersubtypedPAM50.png){width="800"}
 
 **PAM50 test** usually categorizes cancer into 5 sub-types. But in our dataset, we found 4 sub-types only and we stuck to it.
 
-## Results II
+## No. of tumors per cancer stage
 
 ![](/cloud/project/results/barPlotAJCCTumorAmount.png){width="800"}
 
--   AJCC staging system: American Joint Committee on Cancer's system to describe the amount and spread of cancer in a patient's body
+**AJCC staging system**: American Joint Committee on Cancer's system to describe the amount and spread of cancer
+
+## Principal components for proteomes
+
+![](/cloud/project/results/pcaRotationMatrix.png){width="600" height="400"}
+
+## Expression level variation
+
+![](/cloud/project/results/HeatmapPAM50.png){width="670" height="500"}
 
 ## Discussion
 
-    1.  How different is the data for healthy individuals from unhealthy individuals?
-    2.  Can we target unhealthy individuals with specific different medicines in line with which cluster they are a part of?
+1\. How different is the data for healthy individuals from unhealthy individuals?
+
+2\. Can we target unhealthy individuals with specific different medicines in line with which cluster they are a part of?
