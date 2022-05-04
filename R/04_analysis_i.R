@@ -11,10 +11,11 @@ source(file = "R/99_project_functions.R")
 
 # Load data ---------------------------------------------------------------
 clean_joined_data <- read_tsv(file = "data/03_joined_clean_aug_data.tsv") #tsv
-clean_proteosome_data <- read_tsv(file = "data/02_proteosome_data.tsv") #tsv
+clean_proteosome_data <- read_tsv(file = "data/02_proteome_data.tsv") #tsv
 clean_clinical_data <- read_tsv(file = "data/02_clinical_data.tsv") #tsv
 
-view(clean_joined_data)
+# view(clean_joined_data)
+
 # Visualise data ----------------------------------------------------------
 p1 <- clean_joined_data %>%
           ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
@@ -33,78 +34,93 @@ p2 <- clean_clinical_data %>%
           ggplot(aes(x = `AJCC Stage`,
                      fill = `AJCC Stage`)) +
           geom_bar() +
-          theme_bw(base_size = 14,
-                   base_family = "") +
-          scale_x_discrete(guide = guide_axis(angle = 45))+
+          theme_bw(base_size = 7,
+                   base_family = "") + 
           #scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) + 
-          labs(title = "Barplot over tumor stages", ,
+          labs(title = "Boxplot over tumor stages",
                fill = "AJCC Stage",
                y = "Frequency")
 
 p3 <- clean_clinical_data %>%
-          ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
-                     y = `PAM50 mRNA`,
-                     fill = `PAM50 mRNA`)) +
-          geom_bar(width = 1,
-                   stat = "identity") +
-          coord_polar("y",
-                      start = 0) + 
-          scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) +
-          theme_bw() +
-          labs(y = "",
-               x = "")
+  ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
+             y = `PAM50 mRNA`,
+             fill = `PAM50 mRNA`)) +
+  geom_bar(width = 1,
+           stat = "identity") +
+  coord_polar("y",
+              start = 0) + 
+  scale_fill_manual(values = c("darkred", 
+                               "red", 
+                               "orange", 
+                               "yellow")) +
+  labs(y = "",
+       x = "")
 
 
 p4 <- clean_joined_data %>% 
-  ggplot(mapping = aes(x=reorder(Age_groups, Age_groups, function(x)-length(x)), fill = `PAM50 mRNA`)) +
+  ggplot(aes(x = reorder(Age_groups, 
+                         Age_groups, 
+                         function(x)-length(x)), 
+             fill = `PAM50 mRNA`)) +
   geom_bar() + 
-  scale_fill_hue(c=45,l=80)+
-  labs(title = "Barplot of cancer subtyped on PAM50 mRNA",
+  scale_fill_hue(c=45,
+                 l=80) +
+  labs(title = "Cancer subtyped on PAM50 mRNA",
        y = "Frequency",
-       x = "Age Group")
+       x = "Age Group") + 
+  theme(axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7))
 p4
 
 
 
 p5 <- clean_joined_data %>% 
-  ggplot(mapping = aes(x= `AJCC Stage`, fill = as.factor(Tumor))) +
+  ggplot(aes(x = `AJCC Stage`, 
+             fill = as.factor(Tumor))) +
   geom_bar() + 
-  scale_fill_hue(c=45,l=80)+
-  labs(title = "Barplot of Tumor amount in different AJCC stages",
+  scale_fill_hue(c = 45,
+                 l = 80) +
+  theme(axis.text.x = element_text(size = 7),
+        axis.text.y = element_text(size = 7)) + 
+  scale_fill_hue(c = 45,
+                 l = 80) +
+  labs(title = "Number of tumors in different AJCC stages",
        y = "Frequency",
        x = "AJCC stage",
-       fill = "Tumor amount")
+       fill = "No. of tumors")
 p5
 
-p1 + p2
 
-# Write data --------------------------------------------------------------
-#write_tsv(...)
-#ggsave(p1, path = "results", filename = "boxPlotPAM50.png")
-# ggsave(p2, path = "results", filename = "barPlotTumorStage.png")
-# ggsave(p3, path = "results", filename = "piePlotPAM50.png")
+
+# Save plots --------------------------------------------------------------
+ggsave(p1, path = "results", filename = "boxPlotPAM50.png")
+ggsave(p2, path = "results", filename = "barPlotTumorStage.png")
+ggsave(p3, path = "results", filename = "piePlotPAM50.png")
+ggsave(p4, path = "results", filename = "barPlotAgeGroupPAM50.png")
+ggsave(p5, path = "results", filename = "barPlotAJJCTumor.png")
+
 
 
 
 # PCA ---------------------------------------------------------------------
 
-pca_fit <- clean_joined_data %>% 
-  select(starts_with("NP_")) %>%
-  select(where(is.numeric)) %>% 
-  drop_na() %>% 
+# Take data set - make it long (pivot_longer)
+# group by the columns names "NP_"
+# Take fraction of NA in each groups
+#   Look at the fraction
+#   Pull the groups that has a specific fraction/criteria
+#   Get the names of these
+# 
+#   Pull those columns from the original data set
+#   drop NA from these
+  
+
+
+pca_fit <- clean_proteosome_data %>% 
+  select(where(is.numeric)) %>% # retain only numeric columns
+  #select(1:20) %>%
+  drop_na() %>%
   prcomp(scale=TRUE) # do PCA on scaled data
-
-clean_proteosome_data <- clean_proteosome_data %>%
-  drop_na()
-
-pca_fit %>%
-  augment(clean_proteosome_data) %>% # add original dataset back in
-  ggplot(aes(.fittedPC1, .fittedPC2)) + 
-  geom_point(size = 0.7) +
-  # scale_color_manual(
-  #   values = c(malignant = "#D55E00", benign = "#0072B2")
-  # ) +
-  theme_half_open(12) + background_grid()
 
 
 # define arrow style for plotting
@@ -113,7 +129,7 @@ arrow_style <- arrow(
 )
 
 # plot rotation matrix
-pca_fit %>%
+pcaArrowPlot <- pca_fit %>%
   tidy(matrix = "rotation") %>%
   pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value") %>%
   ggplot(aes(PC1, PC2)) +
@@ -122,20 +138,48 @@ pca_fit %>%
     aes(label = column),
     hjust = 1, nudge_x = -0.02, 
     color = "#904C2F", 
-    size = 2.5
+    size = 2.25
   ) +
   xlim(-0.3, 0.05) + ylim(-0.25, 0.25) +
-  coord_fixed() + # fix aspect ratio to 1:1
-  theme_minimal_grid(12)
+  coord_fixed()# + # fix aspect ratio to 1:1
+  #theme_minimal_grid(12)
+pcaArrowPlot
 
 
-pca_fit %>%
+pcaFit <- pca_fit %>%
   tidy(matrix = "eigenvalues") %>%
   ggplot(aes(PC, percent)) +
   geom_col(fill = "#56B4E9", alpha = 0.8) +
-  scale_x_continuous(breaks = 1:84) +
+  scale_x_continuous(breaks = 1:length(pca_fit$sdev)) +
   scale_y_continuous(
     labels = scales::percent_format(),
     expand = expansion(mult = c(0, 0.01))
   ) +
-  theme_minimal_hgrid(12)
+  labs(title = "Variance explained by each PC",
+       y = "Percent",
+       x = "PC") +
+  theme(axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5)) + 
+  scale_fill_hue(c = 45,
+                 l = 80) 
+pcaFit
+
+# Save plots --------------------------------------------------------------
+ggsave(pcaArrowPlot, path = "results", filename = "pcaRotationMatrix.png")
+ggsave(pcaFit, path = "results", filename = "pcaFit.png")
+
+
+
+
+
+# clean_proteosome_data <- clean_proteosome_data %>%
+#   drop_na()
+# 
+# pca_fit %>%
+#   augment(proteome_data) %>% # add original dataset back in
+#   ggplot(aes(.fittedPC1, .fittedPC2)) + 
+#   geom_point(size = 0.7) +
+#   # scale_color_manual(
+#   #   values = c(malignant = "#D55E00", benign = "#0072B2")
+#   # ) +
+#   theme_half_open(12) + background_grid()
