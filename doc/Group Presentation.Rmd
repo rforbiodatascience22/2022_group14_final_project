@@ -16,17 +16,23 @@ output: ioslides_presentation
 ---
 
 ```{r setup, include=FALSE}
+<<<<<<< HEAD
+=======
+knitr::opts_chunk$set(echo = TRUE)
+>>>>>>> c5752cd8ccc024114e785c5da4ab8432c04c2d63
 install.packages("DiagrammeR")
 library("DiagrammeR")
 ```
 
 ```{r}
+<<<<<<< HEAD
 
+=======
+>>>>>>> c5752cd8ccc024114e785c5da4ab8432c04c2d63
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(tidyverse)
 library(kableExtra)
 ```
-
 
 ## Introduction
 
@@ -36,29 +42,29 @@ library(kableExtra)
 
 ## Materials: know our data
 
-+-----------------------------------------------------------+---------------------+---------------------+
-| Dataset name                                              | Observations (rows) | Variables (columns) |
-+===========================================================+=====================+=====================+
-| Protein expression data                                   | 12553               | 86                  |
-|                                                           |                     |                     |
-| *iTRAQ proteome profiling from 77 patients*               |                     |                     |
-+-----------------------------------------------------------+---------------------+---------------------+
-| Clinical data                                             | 105                 | 30                  |
-|                                                           |                     |                     |
-| *Cancer classification of samples from 77 patients*       |                     |                     |
-+-----------------------------------------------------------+---------------------+---------------------+
-
++-----------------------------------------------------+---------------------+---------------------+
+| Dataset name                                        | Observations (rows) | Variables (columns) |
++=====================================================+=====================+=====================+
+| Protein expression data                             | 12553               | 86                  |
+|                                                     |                     |                     |
+| *iTRAQ proteome profiling from 77 patients*         |                     |                     |
++-----------------------------------------------------+---------------------+---------------------+
+| Clinical data                                       | 105                 | 30                  |
+|                                                     |                     |                     |
+| *Cancer classification of samples from 77 patients* |                     |                     |
++-----------------------------------------------------+---------------------+---------------------+
 
 *Source: [Kaggle](https://www.kaggle.com/datasets/piotrgrabo/breastcancerproteomes)*
 
 ## Raw data
+
 ```{r, include = FALSE}
 proteomes_raw <- read_csv(file = "../data/_raw/77_cancer_proteomes_CPTAC_itraq.csv")
 clinical_raw <- read_csv(file = "../data/_raw/clinical_data_breast_cancer.csv")
 ```
 
-**Raw Clinical Data**
-105 observations and 30 variables 
+**Raw Clinical Data** 105 observations and 30 variables
+
 ```{r, echo = FALSE}
 clinical_raw %>% 
   select(0:6) %>%
@@ -67,8 +73,8 @@ clinical_raw %>%
   kable_styling(font_size = 9)
 ```
 
-**Raw Proteome Data**:
-12 553 observations and 86 variables
+**Raw Proteome Data**: 12 553 observations and 86 variables
+
 ```{r, echo = FALSE}
 proteomes_raw %>% 
   select(0:5) %>% 
@@ -79,26 +85,15 @@ proteomes_raw %>%
 
 ## Method: Cleaning data
 
-**Clinical data**: 
-- Remove prefix of TCGA from names, so they match proteome data format for TCGA ID
+**Clinical data**: - Remove prefix of TCGA from names, so they match proteome data format for TCGA ID
 
-**Proteome data**:
-- Remove 3 sample duplicates to avoid overrepresentation of patient
-- 
+**Proteome data**: - Remove 3 sample duplicates to avoid overrepresentation of patient -
 
 ## Methods: Augmenting data
 
 ## Methods
 
 Loads of data cleaning! And it was fun.
-
-```{r, echo = FALSE}
-DiagrammeR::mermaid("
-graph methods
-Import data from kaggle ---> Tidy for: duplicate entries, complex ID structure and NA values",
-height = 200
-)
-```
 
 ## Results I
 
