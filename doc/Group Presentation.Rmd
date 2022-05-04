@@ -89,9 +89,13 @@ proteomes_raw %>%
 
 **AJCC staging system**: American Joint Committee on Cancer's system to describe the amount and spread of cancer
 
-## Principal components for proteomes
+## Principal components and k-means
 
-![](/cloud/project/results/pcaRotationMatrix.png){width="600" height="400"}
++-----------------------------------------------------------------------------+-----------------------------------------------------+
+| PCA rotation matrix                                                         | K-means plot                                        |
++=============================================================================+=====================================================+
+| ![](/cloud/project/results/pcaRotationMatrix.png){width="508" height="400"} | ![](/cloud/project/results/kplot1.png){width="314"} |
++-----------------------------------------------------------------------------+-----------------------------------------------------+
 
 ## Expression level variation
 
