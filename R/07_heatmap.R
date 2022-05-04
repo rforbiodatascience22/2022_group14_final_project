@@ -59,9 +59,9 @@ heatmap_pam50 <- cancer_genes %>%
                        high = "firebrick",
                        name = "Expression (log2)") +
   facet_grid(`PAM50 mRNA`~., scales = "free") +
-  theme_minimal(base_size = 3) +
+  theme_minimal(base_size = 4) +
   theme(axis.text.y = element_blank(),
-        strip.text.y = element_text(size = 5),
+        strip.text.y = element_text(size = 3),
         panel.spacing.y = unit(0.3, "cm")) +
   labs(title = "Heatmap of changes in protein expression level",
        subtitle = "Based on cancer genes, stratified on PAM50 tumor class",
@@ -82,7 +82,7 @@ heatmap_tumor <- cancer_genes %>%
   facet_grid(`Tumor` ~., scales = "free") +
   theme_minimal(base_size = 4) +
   theme(axis.text.y = element_blank(),
-        strip.text.y = element_text(size = 8),
+        strip.text.y = element_text(size = 5),
         panel.spacing.y = unit(0.3, "cm")) +
   labs(title = "Heatmap of changes in protein expression level",
        subtitle = "Based on common cancer genes, stratified on tumor numbers",
