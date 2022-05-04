@@ -11,6 +11,7 @@ source(file = "R/99_project_functions.R")
 
 # Load data ---------------------------------------------------------------
 clean_joined_data <- read_tsv(file = "data/03_joined_clean_aug_data.tsv") #tsv
+clean_joined_data_healthy <- read_tsv(file = "data/03_clinical_clean_aug_data_healthy.tsv")
 clean_proteosome_data <- read_tsv(file = "data/02_proteosome_data.tsv") #tsv
 clean_clinical_data <- read_tsv(file = "data/02_clinical_data.tsv") #tsv
 
@@ -107,17 +108,32 @@ ggsave(p5, path = "results", filename = "barPlotAJCCTumorAmount.png")
 
 
 # PCA ---------------------------------------------------------------------
+# First transpose data
+newnames <- clean_joined_data_healthy$`Complete TCGA ID`
+clean_joined_data_healthy <- clean_joined_data_healthy %>%
+  select(starts_with("NP_"))
+clean_joined_data_healthy_t <- as_tibble(cbind(`RefSeqProteinID` = names(clean_joined_data_healthy), t(clean_joined_data_healthy)))
 
-pca_fit <- clean_proteosome_data %>% 
+# Renaming columns
+#oldnames <- names(clean_joined_data_healthy_t)
+names(clean_joined_data_healthy_t) = newnames
+clean_joined_data_healthy_t <- clean_joined_data_healthy_t %>%
+  select(!starts_with("Ref")) %>%
+  mutate_if(is.character, as.numeric) 
+  
+
+  
+
+## Now time for PCA
+
+pca_fit <- clean_joined_data_healthy_t %>% 
   select(where(is.numeric)) %>% # retain only numeric columns
   drop_na() %>%
   prcomp(scale=TRUE) # do PCA on scaled data
 
-clean_proteosome_data <- clean_proteosome_data %>%
-  drop_na()
 
 pca_fit %>%
-  augment(clean_proteosome_data) %>% # add original dataset back in
+  augment(clean_joined_data_healthy_t) %>% # add original dataset back in
   ggplot(aes(.fittedPC1, .fittedPC2)) + 
   geom_point(size = 0.7) +
   # scale_color_manual(
@@ -128,7 +144,7 @@ pca_fit %>%
 
 # define arrow style for plotting
 arrow_style <- arrow(
-  angle = 20, ends = "first", type = "closed", length = grid::unit(8, "pt")
+  angle = 17.5, ends = "first", type = "closed", length = grid::unit(6, "pt")
 )
 
 # plot rotation matrix
@@ -140,10 +156,10 @@ pca_fit %>%
   geom_text(
     aes(label = column),
     hjust = 1, nudge_x = -0.02, 
-    color = "#904C2F", 
-    size = 2.5
+    color = c(rep("#CD0606", 77), rep("#16A205", 3)), 
+    size = 2.3
   ) +
-  xlim(-0.3, 0.05) + ylim(-0.25, 0.25) +
+  xlim(-0.3, 0.1) + ylim(-0.25, 0.25) +
   coord_fixed() + # fix aspect ratio to 1:1
   theme_minimal_grid(12)
 
@@ -151,10 +167,17 @@ pca_fit %>%
 pca_fit %>%
   tidy(matrix = "eigenvalues") %>%
   ggplot(aes(PC, percent)) +
-  geom_col(fill = "#56B4E9", alpha = 0.8) +
+  geom_col(fill = "#16A205", alpha = 0.8) +
   scale_x_continuous(breaks = 1:84) +
   scale_y_continuous(
     labels = scales::percent_format(),
     expand = expansion(mult = c(0, 0.01))
   ) +
-  theme_minimal_hgrid(12)
+  #theme_minimal_hgrid(12) +
+  labs(title = "Variance explained by each PC",
+       y = "Percent",
+       x = "PC") +
+  theme(axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5)) + 
+  scale_fill_hue(c = 45,
+                 l = 80)
