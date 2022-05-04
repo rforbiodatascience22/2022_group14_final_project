@@ -71,12 +71,10 @@ proteomes_raw %>%
 ```
 
 ## Method: Cleaning data
-
-**Clinical data**: - Remove prefix of TCGA from names, so they match proteome data format for TCGA ID
-
-**Proteome data**: - Remove 3 sample duplicates to avoid overrepresentation of patient -
+![](/cloud/project/results/workflowClean.png){width="700"}
 
 ## Methods: Augmenting data
+
 
 ## Methods
 
