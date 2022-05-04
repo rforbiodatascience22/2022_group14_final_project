@@ -55,7 +55,7 @@ Work in progress here!
 
 ## Results II
 
-![](images/barPlotAJCCTumorAmount-04.png){width="800"}
+![](/cloud/project/results/barPlotAJCCTumorAmount.png){width="800"}
 
 -   AJCC staging system: American Joint Committee on Cancer's system to describe the amount and spread of cancer in a patient's body
 
