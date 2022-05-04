@@ -28,7 +28,6 @@ library(tidyverse)
 library(kableExtra)
 ```
 
-
 ## Introduction
 
 **Our dataset**: Breast Cancer Proteomes data from the Clinical Proteomic Tumor Analysis Consortium (NCI/NIH)
@@ -37,29 +36,29 @@ library(kableExtra)
 
 ## Materials: know our data
 
-+-----------------------------------------------------------+---------------------+---------------------+
-| Dataset name                                              | Observations (rows) | Variables (columns) |
-+===========================================================+=====================+=====================+
-| Protein expression data                                   | 12553               | 86                  |
-|                                                           |                     |                     |
-| *iTRAQ proteome profiling from 77 patients*               |                     |                     |
-+-----------------------------------------------------------+---------------------+---------------------+
-| Clinical data                                             | 105                 | 30                  |
-|                                                           |                     |                     |
-| *Cancer classification of samples from 77 patients*       |                     |                     |
-+-----------------------------------------------------------+---------------------+---------------------+
-
++-----------------------------------------------------+---------------------+---------------------+
+| Dataset name                                        | Observations (rows) | Variables (columns) |
++=====================================================+=====================+=====================+
+| Protein expression data                             | 12553               | 86                  |
+|                                                     |                     |                     |
+| *iTRAQ proteome profiling from 77 patients*         |                     |                     |
++-----------------------------------------------------+---------------------+---------------------+
+| Clinical data                                       | 105                 | 30                  |
+|                                                     |                     |                     |
+| *Cancer classification of samples from 77 patients* |                     |                     |
++-----------------------------------------------------+---------------------+---------------------+
 
 *Source: [Kaggle](https://www.kaggle.com/datasets/piotrgrabo/breastcancerproteomes)*
 
 ## Raw data
+
 ```{r, include = FALSE}
 proteomes_raw <- read_csv(file = "../data/_raw/77_cancer_proteomes_CPTAC_itraq.csv")
 clinical_raw <- read_csv(file = "../data/_raw/clinical_data_breast_cancer.csv")
 ```
 
-**Raw Clinical Data**
-105 observations and 30 variables 
+**Raw Clinical Data** 105 observations and 30 variables
+
 ```{r, echo = FALSE}
 clinical_raw %>% 
   select(0:6) %>%
@@ -68,8 +67,8 @@ clinical_raw %>%
   kable_styling(font_size = 9)
 ```
 
-**Raw Proteome Data**:
-12 553 observations and 86 variables
+**Raw Proteome Data**: 12 553 observations and 86 variables
+
 ```{r, echo = FALSE}
 proteomes_raw %>% 
   select(0:5) %>% 
@@ -80,12 +79,9 @@ proteomes_raw %>%
 
 ## Method: Cleaning data
 
-**Clinical data**: 
-- Remove prefix of TCGA from names, so they match proteome data format for TCGA ID
+**Clinical data**: - Remove prefix of TCGA from names, so they match proteome data format for TCGA ID
 
-**Proteome data**:
-- Remove 3 sample duplicates to avoid overrepresentation of patient
-- 
+**Proteome data**: - Remove 3 sample duplicates to avoid overrepresentation of patient -
 
 ## Methods: Augmenting data
 

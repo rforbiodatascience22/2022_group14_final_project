@@ -34,18 +34,29 @@ clean_joined_data %>% count(`OS event`)
 
 # Visualise data ----------------------------------------------------------
 p1 <- clean_joined_data %>%
-          ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
-                     y = `PAM50 mRNA`,
-                     fill = `PAM50 mRNA`)) +
-          geom_boxplot() +
-          theme_bw(base_size = 8,
-                   base_family = "") + 
-          scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) + 
-          labs(title = "Boxplot over classification of breast cancer subtypes", 
-               subtitle = "by PAM50 classification system",
-               fill = "PAM50 classes")
+  ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
+             y = `PAM50 mRNA`,
+             fill = `PAM50 mRNA`)) +
+  geom_boxplot() +
+  theme_bw(base_size = 8,
+           base_family = "") + 
+  scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) + 
+  labs(title = "Boxplot over classification of breast cancer subtypes", 
+       subtitle = "by PAM50 classification system",
+       fill = "PAM50 classes")
 
 p2 <- clean_clinical_data %>%
+  ggplot(aes(x = `AJCC Stage`,
+             fill = `AJCC Stage`)) +
+  geom_bar() +
+  theme_bw(base_size = 14,
+           base_family = "") +
+  scale_x_discrete(guide = guide_axis(angle = 45))+
+  #scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) + 
+  labs(title = "Barplot over tumor stages", ,
+       fill = "AJCC Stage",
+       y = "Frequency")
+
           ggplot(aes(x = `AJCC Stage`,
                      fill = `AJCC Stage`)) +
           geom_bar() +
@@ -58,17 +69,17 @@ p2 <- clean_clinical_data %>%
                y = "Frequency")
 
 p3 <- clean_clinical_data %>%
-          ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
-                     y = `PAM50 mRNA`,
-                     fill = `PAM50 mRNA`)) +
-          geom_bar(width = 1,
-                   stat = "identity") +
-          coord_polar("y",
-                      start = 0) + 
-          scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) +
-          theme_bw() +
-          labs(y = "",
-               x = "")
+  ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
+             y = `PAM50 mRNA`,
+             fill = `PAM50 mRNA`)) +
+  geom_bar(width = 1,
+           stat = "identity") +
+  coord_polar("y",
+              start = 0) + 
+  scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) +
+  theme_bw() +
+  labs(y = "",
+       x = "")
 
 p4 <- clean_joined_data %>% 
   ggplot(mapping = aes(x=reorder(Age_groups, Age_groups, function(x)-length(x)), fill = `PAM50 mRNA`)) +
@@ -109,41 +120,34 @@ ggsave(p5, path = "results", filename = "barPlotAJCCTumorAmount.png")
 
 
 # PCA ---------------------------------------------------------------------
-# First transpose data
-# bla = clean_proteosome_data %>%
-#   pivot_longer(cols = -(`Complete TCGA ID`), 
-#                names_to = "RefSeqProteinID", 
-#                values_to = "Value")
-# 
-# pca_fit <- bla %>% 
-#   select(where(is.numeric)) %>% # retain only numeric columns
-#   drop_na() %>%
-#   prcomp(scale=TRUE) # do PCA on scaled data
 
+# Pull names from clean joined data
+newnames <- clean_joined_data_healthy %>%
+  pull(`Complete TCGA ID`)
 
-
-
-newnames <- clean_joined_data_healthy$`Complete TCGA ID`
-clean_joined_data_healthy <- clean_joined_data_healthy %>%
+# Select NP columns
+slice_of_joined_data <- clean_joined_data_healthy %>%
   select(starts_with("NP_"))
-clean_joined_data_healthy_t <- as_tibble(cbind(`RefSeqProteinID` = names(clean_joined_data_healthy), t(clean_joined_data_healthy)))
-
-# Renaming columns
-#oldnames <- names(clean_joined_data_healthy_t)
-names(clean_joined_data_healthy_t) = c("RefSeqProteinID", newnames)
-clean_joined_data_healthy_t <- clean_joined_data_healthy_t %>%
-  select(!starts_with("Ref")) %>%
-  mutate_if(is.character, as.numeric) 
 
 
-write_tsv(x = clean_joined_data_healthy_t,
-          file = "data/03_clean_joined_data_healthy_t.tsv")
-  
+# Transpose
+healthyProteomeDataLong <- as_tibble(cbind(`RefSeqProteinID` = names(slice_of_joined_data), t(slice_of_joined_data)))
 
-  
+newnames <- c("RefSeqProteinID", newnames)
+
+healthyProteomeDataLong <- healthyProteomeDataLong %>%
+  rename_with(~ newnames, starts_with(c("RefSeqProteinID", 'V')))
+
+healthyProteomeDataLong <- healthyProteomeDataLong %>% 
+  mutate_at(c(2:81), as.numeric)
+
+write_tsv(x = healthyProteomeDataLong,
+          file = "data/03_healthy_proteome_data_long.tsv")
+
+
 ## Now time for PCA
 
-pca_fit <- clean_joined_data_healthy_t %>% 
+pca_fit <- healthyProteomeDataLong %>% 
   select(where(is.numeric)) %>% # retain only numeric columns
   drop_na() %>%
   prcomp(scale=TRUE) # do PCA on scaled data
@@ -205,6 +209,9 @@ ggsave(pcaBarPlot, path = "results", filename = "pcaFit.png")
 
 
 # Save PCA fit for clustering
+write_tsv(x =  pca_fit %>%
+            tidy(matrix = "rotation"),
+          file = "data/04_PCA_fit_rotation.tsv")
 #write_tsv(x =  pca_fit %>%
  #           tidy(matrix = "rotation"),
   #        file = "data/04_PCA_fit_rotation.tsv")
