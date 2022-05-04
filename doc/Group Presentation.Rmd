@@ -93,14 +93,6 @@ proteomes_raw %>%
 
 Loads of data cleaning! And it was fun.
 
-```{r, echo = FALSE}
-DiagrammeR::mermaid("
-graph methods
-Import data from kaggle ---> Tidy for: duplicate entries, complex ID structure and NA values",
-height = 200
-)
-```
-
 ## Results I
 
 ![](/cloud/project/results/barPlotcancersubtypedPAM50.png){width="800"}
