@@ -17,7 +17,6 @@ output: ioslides_presentation
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
 install.packages("DiagrammeR")
 library("DiagrammeR")
 ```
