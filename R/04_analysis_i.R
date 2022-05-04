@@ -77,7 +77,7 @@ p4 <- clean_joined_data %>%
   labs(title = "Barplot of cancer subtyped on PAM50 mRNA",
        y = "Frequency",
        x = "Age Group")
-
+p4
 p5 <- clean_joined_data %>% 
   ggplot(mapping = aes(x= `AJCC Stage`, fill = as.factor(Tumor))) +
   geom_bar() + 

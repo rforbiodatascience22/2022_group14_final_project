@@ -51,14 +51,25 @@ cancer_genes <- clean_joined_data %>%
                values_to = "Expression level")
 
 
-cancer_genes %>% 
+heatmap_pam50 <- cancer_genes %>% 
   ggplot(mapping = aes(x = Gene,
                        y = `Complete TCGA ID`,
                        fill = `Expression level`)) +
   geom_raster() +
-  scale_fill_gradient2(low = "#075AFF", mid = "white", high = "#FF0000", ) +
+  scale_fill_gradient2(low = "navyblue",
+                       mid = "white",
+                       high = "firebrick",
+                       name = "Expression (log2)") +
   facet_grid(`PAM50 mRNA`~., scales = "free") +
-  theme_minimal() +
-  theme(axis.text = element_blank())
+  theme_minimal(base_size = 8) +
+  theme(axis.text.y = element_blank(),
+        strip.text.y = element_text(size = 8)) +
+  labs(title = "Heatmap of changes in protein expression level",
+       subtitle = "Based on cancer genes, stratified on PAM50 tumor class",
+       x = "Breast cancer related genes",
+       y= "")
 
+
+# Write data --------------------------------------------------------------
+ggsave(heatmap_pam50, path = "results", filename = "HeatmapPAM50.png")
 
