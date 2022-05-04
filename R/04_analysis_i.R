@@ -51,7 +51,7 @@ p2 <- clean_clinical_data %>%
           geom_bar() +
           theme_bw(base_size = 14,
                    base_family = "") +
-          scale_x_discrete(guide = guide_axis(angle = 45))+
+          scale_x_discrete(guide = guide_axis(angle = 45)) +
           #scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) + 
           labs(title = "Barplot over tumor stages", ,
                fill = "AJCC Stage",
@@ -96,6 +96,7 @@ tumor_vs_pam50 <- clean_joined_data %>%
 tumor_vs_pam50
 
 p5
+
 
 
 # Write data --------------------------------------------------------------

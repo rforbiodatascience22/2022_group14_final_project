@@ -16,7 +16,6 @@ output: ioslides_presentation
 ---
 
 ```{r setup, include=FALSE}
-<<<<<<< HEAD
 knitr::opts_chunk$set(echo = TRUE)
 
 install.packages("DiagrammeR")
@@ -24,12 +23,9 @@ library("DiagrammeR")
 ```
 
 ```{r}
-
-=======
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(tidyverse)
 library(kableExtra)
->>>>>>> a8c8fda1c826af26cf93c9b5d3eb8dafe0cb9e4b
 ```
 
 
