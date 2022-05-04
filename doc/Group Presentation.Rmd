@@ -15,11 +15,6 @@ date: '08 May 2022'
 output: ioslides_presentation
 ---
 
-```{r setup, include=FALSE}
-install.packages("DiagrammeR")
-library("DiagrammeR")
-```
-
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(tidyverse)
