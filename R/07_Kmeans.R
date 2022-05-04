@@ -11,7 +11,7 @@ kmeans_data <- pca_fit %>%
 
 cluster1 <- kmeans_data %>%
   select(.fittedPC1, .fittedPC2) %>%
-  kmeans(centers = 5)
+  kmeans(centers = 3)
 
 k_pca_aug1 <- cluster1 %>%
   augment(kmeans_data) %>%
@@ -21,7 +21,7 @@ k_pca_aug1 <- cluster1 %>%
 
 cluster2 <- k_pca_aug1 %>%
   select(.fittedPC1, .fittedPC2) %>%
-  kmeans(centers = 5)
+  kmeans(centers = 3)
 
 k_pca_aug2 <- cluster2 %>%
   augment(k_pca_aug1) %>%
@@ -33,14 +33,17 @@ k_pca_aug2 <- cluster2 %>%
 
 kplot1 <- k_pca_aug1 %>%
   ggplot(aes(x=.fittedPC1, y=.fittedPC2, color=Cluster1)) +
-  geom_point() +
-  theme(legend.position = "bottom")
+  geom_point(size = 0.1) +
+  theme(legend.position = "None")
 
 kplot1
 
 kplot2 <- k_pca_aug2 %>%
   ggplot(aes(x=.fittedPC1, y=.fittedPC2, color=Cluster2)) +
-  geom_point() +
-  theme(legend.position = "bottom")
+  geom_point(size = 0.1) +
+  theme(legend.position = "None")
 
 kplot2
+
+ggsave(kplot1, path = "results", filename = "kplot1.png")
+ggsave(kplot2, path = "results", filename = "kplot2.png")
