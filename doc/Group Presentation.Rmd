@@ -102,7 +102,7 @@ proteomes_raw %>%
 ## Expression level variation
 
 +-----------------------------------------------------------+-----------------------------------------------------------+
-| ![](/cloud/project/results/heatmapPAM50.png){width="343"} | ![](/cloud/project/results/heatmapTumor.png){width="400"} |
+| ![](/cloud/project/results/heatmapPAM50.png){width="380"} | ![](/cloud/project/results/heatmapTumor.png){width="380"} |
 +-----------------------------------------------------------+-----------------------------------------------------------+
 
 ## Discussion
