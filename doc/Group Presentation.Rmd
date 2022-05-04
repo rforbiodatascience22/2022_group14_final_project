@@ -13,6 +13,9 @@ output: ioslides_presentation
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+install.packages("DiagrammeR")
+library("DiagrammeR")
 ```
 
 ## Introduction
@@ -62,7 +65,5 @@ Work in progress here!
 -   Work in progress here! -- need to rotate the x-axis labels for legibility
 
     ## Discussion
-
-<!-- -->
 
 -   Work in progress here!
