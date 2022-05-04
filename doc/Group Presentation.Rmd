@@ -1,21 +1,37 @@
 ---
-title: "Report A"
+title: "Analysis of Proteomes Data for Breast Cancer"
 
-author: 
+author:
+- Group 14
 - Alesia Olsen (s174584)
 - Cathrine Lind (s184338)
 - Mads Hartmann (s184284)
 - Swati Tak (s220868)
+
+fontsize: 12pt
+theme: cerulean
 
 date: '08 May 2022'
 output: ioslides_presentation
 ---
 
 ```{r setup, include=FALSE}
+<<<<<<< HEAD
+knitr::opts_chunk$set(echo = TRUE)
+
+install.packages("DiagrammeR")
+library("DiagrammeR")
+```
+
+```{r}
+
+=======
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(tidyverse)
 library(kableExtra)
+>>>>>>> a8c8fda1c826af26cf93c9b5d3eb8dafe0cb9e4b
 ```
+
 
 ## Introduction
 
@@ -77,15 +93,21 @@ proteomes_raw %>%
 
 ## Methods: Augmenting data
 
-## Methods: analysis I
+## Methods
 
 Loads of data cleaning! And it was fun.
 
-Work in progress here!
+```{r, echo = FALSE}
+DiagrammeR::mermaid("
+graph methods
+Import data from kaggle ---> Tidy for: duplicate entries, complex ID structure and NA values",
+height = 200
+)
+```
 
 ## Results I
 
-![](images/barPlotcancersubtypedPAM50-04.png){width="800"}
+![](/cloud/project/results/barPlotcancersubtypedPAM50.png){width="800"}
 
 **PAM50 test** usually categorizes cancer into 5 sub-types. But in our dataset, we found 4 sub-types only and we stuck to it.
 
@@ -95,10 +117,7 @@ Work in progress here!
 
 -   AJCC staging system: American Joint Committee on Cancer's system to describe the amount and spread of cancer in a patient's body
 
--   Work in progress here! -- need to rotate the x-axis labels for legibility
+## Discussion
 
-    ## Discussion
-
-<!-- -->
-
--   Work in progress here!
+    1.  How different is the data for healthy individuals from unhealthy individuals?
+    2.  Can we target unhealthy individuals with specific different medicines in line with which cluster they are a part of?
