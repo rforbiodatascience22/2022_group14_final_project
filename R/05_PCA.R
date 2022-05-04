@@ -5,41 +5,44 @@ library(scales)
 library(broom)  
 library(cowplot)
 
-#Load data ---------------------------------------------------------------
+# Load data ---------------------------------------------------------------
 clean_joined_data_healthy <- read_tsv(file = "data/03_clinical_clean_aug_data_healthy.tsv")
 
-
+# Preparing PCA data ------------------------------------------------------
 # Pull names from clean joined data
 newnames <- clean_joined_data_healthy %>%
   pull(`Complete TCGA ID`)
 
-# Select NP columns
+# Select NP_ columns
 slice_of_joined_data <- clean_joined_data_healthy %>%
   select(starts_with("NP_"))
 
-
-# Transpose
-healthyProteomeDataLong <- as_tibble(cbind(`RefSeqProteinID` = names(slice_of_joined_data), t(slice_of_joined_data)))
+# Transpose dataframe
+healthyProteomeDataLong <- as_tibble(cbind(`RefSeqProteinID` = names(slice_of_joined_data),
+                                           t(slice_of_joined_data)))
 
 newnames <- c("RefSeqProteinID", newnames)
 
 healthyProteomeDataLong <- healthyProteomeDataLong %>%
-  rename_with(~ newnames, starts_with(c("RefSeqProteinID", 'V')))
+  rename_with(~ newnames, 
+              starts_with(c("RefSeqProteinID", 
+                            'V')))
 
 healthyProteomeDataLong <- healthyProteomeDataLong %>% 
-  mutate_at(c(2:81), as.numeric)
+  mutate_at(c(2:81), 
+            as.numeric)
 
 
-#save healthy proteome data file 
+#save healthy patients proteome data file 
 write_tsv(x = healthyProteomeDataLong,
           file = "data/06_healthy_proteome_data_long.tsv")
 
 
-## Now time for PCA
+# PCA Analysis ---------------------------------------------------------------
 pca_fit <- healthyProteomeDataLong %>% 
-  select(where(is.numeric)) %>% # retain only numeric columns
+  select(where(is.numeric)) %>% 
   drop_na() %>%
-  prcomp(scale=TRUE) # do PCA on scaled data
+  prcomp(scale=TRUE)
 
 
 pca_fit %>%
@@ -54,8 +57,7 @@ pca_fit %>%
 
 # define arrow style for plotting
 arrow_style <- arrow(
-  angle = 17.5, ends = "first", type = "closed", length = grid::unit(6, "pt")
-)
+  angle = 17.5, ends = "first", type = "closed", length = grid::unit(6, "pt"))
 
 # plot rotation matrix
 pcaArrowPlot <- pca_fit %>%
@@ -97,8 +99,12 @@ pcaBarPlot <- pca_fit %>%
                  l = 80)
 
 # Write data ---------------------------------------------------------------
-ggsave(pcaArrowPlot, path = "results", filename = "pcaRotationMatrix.png")
-ggsave(pcaBarPlot, path = "results", filename = "pcaFit.png")
+ggsave(pcaArrowPlot, 
+       path = "results", 
+       filename = "pcaRotationMatrix.png")
+ggsave(pcaBarPlot, 
+       path = "results", 
+       filename = "pcaFit.png")
 
 # Save PCA fit for clustering
 write_tsv(x =  pca_fit %>%
