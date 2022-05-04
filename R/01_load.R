@@ -3,9 +3,6 @@ library("tidyverse")
 library("broom")
 
 
-# Define functions --------------------------------------------------------
-source(file = "R/99_project_functions.R")
-
 
 # Write data --------------------------------------------------------------
 proteomes_raw <- read_csv(file = "data/_raw/77_cancer_proteomes_CPTAC_itraq.csv")
