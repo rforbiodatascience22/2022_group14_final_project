@@ -1,11 +1,15 @@
 ---
-title: "Report A"
+title: "Analysis of Proteomes Data for Breast Cancer"
 
-author: 
+author:
+- Group 14
 - Alesia Olsen (s174584)
 - Cathrine Lind (s184338)
 - Mads Hartmann (s184284)
 - Swati Tak (s220868)
+
+fontsize: 12pt
+theme: cerulean
 
 date: '08 May 2022'
 output: ioslides_presentation
@@ -13,6 +17,15 @@ output: ioslides_presentation
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+install.packages("DiagrammeR")
+library("DiagrammeR")
+```
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(kableExtra)
 ```
 
 ## Introduction
@@ -23,36 +36,62 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Materials: know our data
 
-+-----------------------------------------------------------+---------------------+---------------------+
-| Dataset name                                              | Observations (rows) | Variables (columns) |
-+===========================================================+=====================+=====================+
-| Protein expression data                                   | 12553               | 86                  |
-|                                                           |                     |                     |
-| *iTRAQ proteome profiling from 77 patients*               |                     |                     |
-+-----------------------------------------------------------+---------------------+---------------------+
-| Clinical data                                             | 105                 | 30                  |
-|                                                           |                     |                     |
-| *Cancer classification of samples from 77 patients*       |                     |                     |
-+-----------------------------------------------------------+---------------------+---------------------+
-
++-----------------------------------------------------+---------------------+---------------------+
+| Dataset name                                        | Observations (rows) | Variables (columns) |
++=====================================================+=====================+=====================+
+| Protein expression data                             | 12553               | 86                  |
+|                                                     |                     |                     |
+| *iTRAQ proteome profiling from 77 patients*         |                     |                     |
++-----------------------------------------------------+---------------------+---------------------+
+| Clinical data                                       | 105                 | 30                  |
+|                                                     |                     |                     |
+| *Cancer classification of samples from 77 patients* |                     |                     |
++-----------------------------------------------------+---------------------+---------------------+
 
 *Source: [Kaggle](https://www.kaggle.com/datasets/piotrgrabo/breastcancerproteomes)*
 
-## Methods: Cleaning Data
-**Cleaning data**: 
+## Raw data
 
+```{r, include = FALSE}
+proteomes_raw <- read_csv(file = "../data/_raw/77_cancer_proteomes_CPTAC_itraq.csv")
+clinical_raw <- read_csv(file = "../data/_raw/clinical_data_breast_cancer.csv")
+```
+
+**Raw Clinical Data** 105 observations and 30 variables
+
+```{r, echo = FALSE}
+clinical_raw %>% 
+  select(0:6) %>%
+  slice(0:4) %>% 
+  kable() %>% 
+  kable_styling(font_size = 9)
+```
+
+**Raw Proteome Data**: 12 553 observations and 86 variables
+
+```{r, echo = FALSE}
+proteomes_raw %>% 
+  select(0:5) %>% 
+  slice(0:4) %>% 
+  kable() %>% 
+  kable_styling(font_size = 9)
+```
+
+## Method: Cleaning data
+
+**Clinical data**: - Remove prefix of TCGA from names, so they match proteome data format for TCGA ID
+
+**Proteome data**: - Remove 3 sample duplicates to avoid overrepresentation of patient -
 
 ## Methods: Augmenting data
 
-## Methods: analysis I
+## Methods
 
 Loads of data cleaning! And it was fun.
 
-Work in progress here!
-
 ## Results I
 
-![](images/barPlotcancersubtypedPAM50-04.png){width="800"}
+![](/cloud/project/results/barPlotcancersubtypedPAM50.png){width="800"}
 
 **PAM50 test** usually categorizes cancer into 5 sub-types. But in our dataset, we found 4 sub-types only and we stuck to it.
 
@@ -62,10 +101,7 @@ Work in progress here!
 
 -   AJCC staging system: American Joint Committee on Cancer's system to describe the amount and spread of cancer in a patient's body
 
--   Work in progress here! -- need to rotate the x-axis labels for legibility
+## Discussion
 
-    ## Discussion
-
-<!-- -->
-
--   Work in progress here!
+    1.  How different is the data for healthy individuals from unhealthy individuals?
+    2.  Can we target unhealthy individuals with specific different medicines in line with which cluster they are a part of?

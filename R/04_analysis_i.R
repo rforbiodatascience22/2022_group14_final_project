@@ -57,6 +57,17 @@ p2 <- clean_clinical_data %>%
        fill = "AJCC Stage",
        y = "Frequency")
 
+          ggplot(aes(x = `AJCC Stage`,
+                     fill = `AJCC Stage`)) +
+          geom_bar() +
+          theme_bw(base_size = 14,
+                   base_family = "") +
+          scale_x_discrete(guide = guide_axis(angle = 45)) +
+          #scale_fill_manual(values = c("darkred", "red", "orange", "yellow")) + 
+          labs(title = "Barplot over tumor stages", ,
+               fill = "AJCC Stage",
+               y = "Frequency")
+
 p3 <- clean_clinical_data %>%
   ggplot(aes(x = `Age at Initial Pathologic Diagnosis`,
              y = `PAM50 mRNA`,
@@ -96,6 +107,7 @@ tumor_vs_pam50 <- clean_joined_data %>%
 tumor_vs_pam50
 
 p5
+
 
 
 # Write data --------------------------------------------------------------
@@ -202,5 +214,51 @@ ggsave(pcaBarPlot, path = "results", filename = "pcaFit.png")
 write_tsv(x =  pca_fit %>%
             tidy(matrix = "rotation"),
           file = "data/04_PCA_fit_rotation.tsv")
+#write_tsv(x =  pca_fit %>%
+ #           tidy(matrix = "rotation"),
+  #        file = "data/04_PCA_fit_rotation.tsv")
 
 
+# Now time for K-means clustering
+
+kmeans_data <- pca_fit %>%
+  augment(clean_joined_data_healthy_t)
+
+cluster1 <- kmeans_data %>%
+  select(.fittedPC1, .fittedPC2) %>%
+  kmeans(centers = 5)
+
+k_pca_aug1 <- cluster1 %>%
+  augment(kmeans_data) %>%
+  rename(Cluster1 = .cluster)
+
+colnames(k_pca_aug1)
+
+#K-means clustering round 2
+
+cluster2 <- k_pca_aug1 %>%
+  select(.fittedPC1, .fittedPC2) %>%
+  kmeans(centers = 5)
+
+k_pca_aug2 <- cluster2 %>%
+  augment(k_pca_aug1) %>%
+  rename(Cluster2 = .cluster)
+
+colnames(k_pca_aug2)
+
+# Visualise K-means clustering data ----------------------------------------------------------
+#my_data_clean_aug %>% ...
+  
+  kplot1 <- k_pca_aug1 %>%
+  ggplot(aes(x=.fittedPC1, y=.fittedPC2, color=Cluster1)) +
+  geom_point() +
+  theme(legend.position = "bottom")
+
+kplot1
+
+kplot2 <- k_pca_aug2 %>%
+  ggplot(aes(x=.fittedPC1, y=.fittedPC2, color=Cluster2)) +
+  geom_point() +
+  theme(legend.position = "bottom")
+
+kplot2
