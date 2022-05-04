@@ -3,7 +3,7 @@ title: "Report A"
 
 author: 
 - Alesia Olsen (s174584)
-- Cathrin Lind (s184284)
+- Cathrine Lind (s184338)
 - Mads Hartmann (s184284)
 - Swati Tak (s220868)
 
