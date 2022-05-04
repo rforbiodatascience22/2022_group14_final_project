@@ -1,4 +1,3 @@
-rm(list = ls())
 # Load libraries ----------------------------------------------------------
 library(tidyverse)
 library(ggplot2)
@@ -7,9 +6,6 @@ library(broom)
 library(cowplot)
 library(dplyr)
 library(patchwork)
-
-# Define functions --------------------------------------------------------
-source(file = "R/99_project_functions.R")
 
 # Load data ---------------------------------------------------------------
 clean_joined_data <- read_tsv(file = "data/03_joined_clean_aug_data.tsv") 
