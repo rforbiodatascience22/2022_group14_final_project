@@ -17,7 +17,7 @@ proteome_data <- read_tsv(file = "data/02_proteome_data.tsv")
 # Wrangle data ------------------------------------------------------------
 
 # Transpose proteosome data
-prot <- cbind("Complete TCGA ID" = names(proteome), t(proteome))
+prot <- cbind("Complete TCGA ID" = names(proteome_data), t(proteome_data))
 
 # Join proteosome and clinical data by "Complete TCGA ID"
 data = clinical %>% left_join(prot, copy = T)
