@@ -78,7 +78,6 @@ proteomes_raw %>%
 
 ![](/cloud/project/results/WorkflowAugment.png){width="800"}
 
-
 # Results
 
 ## Cancer subtypes in each age group
@@ -96,9 +95,8 @@ proteomes_raw %>%
 ## Expression level variation
 
 +-----------------------------------------------------------+-----------------------------------------------------------+
-| ![](/cloud/project/results/heatmapPAM50.png){width="343"} | ![](/cloud/project/results/heatmapTumor.png){width="400"} |
+| ![](/cloud/project/results/heatmapPAM50.png){width="400"} | ![](/cloud/project/results/heatmapTumor.png){width="400"} |
 +-----------------------------------------------------------+-----------------------------------------------------------+
-
 
 ## Principal components and k-means
 
