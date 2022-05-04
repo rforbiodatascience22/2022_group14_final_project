@@ -15,7 +15,7 @@ date: '08 May 2022'
 output: ioslides_presentation
 ---
 
-```{r, include=FALSE}
+```{r, include=FALSE, fig.align = "left"}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(tidyverse)
 library(kableExtra)
@@ -26,8 +26,6 @@ library(kableExtra)
 **Our dataset**: Breast Cancer Proteomes data from the Clinical Proteomic Tumor Analysis Consortium (NCI/NIH)
 
 **Our aim**: To find meaningful biological insights, just like everybody else! And to have some learnings on the way.
-
-## Materials: know our data
 
 +-----------------------------------------------------+---------------------+---------------------+
 | Dataset name                                        | Observations (rows) | Variables (columns) |
@@ -70,12 +68,18 @@ proteomes_raw %>%
   kable_styling(font_size = 9)
 ```
 
-## Method: Cleaning data
+# Methods
+
+## Cleaning data
 
 ![](/cloud/project/results/workflowClean.png){width="700"}
 
-## Methods: Augmenting data
+## Augmenting data
+
 ![](/cloud/project/results/WorkflowAugment.png){width="800"}
+
+
+# Results
 
 ## Cancer subtypes in each age group
 
@@ -91,15 +95,15 @@ proteomes_raw %>%
 
 ## Principal components and k-means
 
-+-----------------------------------------------------------------------------+-----------------------------------------------------+
-| PCA rotation matrix                                                         | K-means plot                                        |
-+=============================================================================+=====================================================+
-| ![](/cloud/project/results/pcaRotationMatrix.png){width="508" height="400"} | ![](/cloud/project/results/kplot1.png){width="314"} |
-+-----------------------------------------------------------------------------+-----------------------------------------------------+
++----------------------------------------------------------------+-----------------------------------------------------+
+| ![](/cloud/project/results/pcaRotationMatrix.png){width="397"} | ![](/cloud/project/results/kplot1.png){width="316"} |
++----------------------------------------------------------------+-----------------------------------------------------+
 
 ## Expression level variation
 
-![](/cloud/project/results/HeatmapPAM50.png){width="670" height="500"}
++-----------------------------------------------------------+-----------------------------------------------------------+
+| ![](/cloud/project/results/heatmapPAM50.png){width="343"} | ![](/cloud/project/results/heatmapTumor.png){width="400"} |
++-----------------------------------------------------------+-----------------------------------------------------------+
 
 ## Discussion
 
