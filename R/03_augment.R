@@ -64,6 +64,15 @@ joined_data <- clinical_data %>%
             copy = T) %>%
   drop_na() 
 
+
+## Adding healthy persons to data
+healthy_rows <- prot_wide_no_na %>%
+  slice_tail(n = 3)
+
+## Add healthy data rows to joined data
+joined_data_healthy <- joined_data %>%
+  add_row(healthy_rows)
+
 # Write data --------------------------------------------------------------
 write_tsv(x = joined_data,
           file = "data/03_joined_clean_aug_data.tsv")
@@ -71,3 +80,5 @@ write_tsv(x = prot_wide_no_na,
           file = "data/03_proteome_clean_aug_data.tsv")
 write_tsv(x = clinical_data, 
           file = "data/03_clinical_clean_aug_data.tsv")
+write_tsv(x = joined_data_healthy, 
+          file = "data/03_clinical_clean_aug_data_healthy.tsv")

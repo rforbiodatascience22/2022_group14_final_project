@@ -1,0 +1,68 @@
+---
+title: "Report A"
+
+author: 
+- Alesia Olsen (s174584)
+- Cathrin Lind (s184284)
+- Mads Hartmann (s184284)
+- Swati Tak (s220868)
+
+date: '08 May 2022'
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+**Our dataset**: Breast Cancer Proteomes data from the Clinical Proteomic Tumor Analysis Consortium (NCI/NIH)
+
+**Our aim**: To find meaningful biological insights, just like everybody else! And to have some learnings on the way.
+
+## Materials: know our data
+
++-----------------------------------------------------------+---------------------+---------------------+
+| Dataset name                                              | Observations (rows) | Variables (columns) |
++===========================================================+=====================+=====================+
+| Protein expression data                                   | 12553               | 86                  |
+|                                                           |                     |                     |
+| *iTRAQ proteome profiling*                                |                     |                     |
++-----------------------------------------------------------+---------------------+---------------------+
+| Clinical data                                             | 105                 | 30                  |
+|                                                           |                     |                     |
+| *Cancer classification of samples*                        |                     |                     |
++-----------------------------------------------------------+---------------------+---------------------+
+| PAM50_proteins                                            | 100                 | 4                   |
+|                                                           |                     |                     |
+| *List of genes and proteins used by PAM50 classification* |                     |                     |
++-----------------------------------------------------------+---------------------+---------------------+
+
+*Source: [Kaggle, of course!](https://www.kaggle.com/datasets/piotrgrabo/breastcancerproteomes)*
+
+## Methods: analysis I
+
+Loads of data cleaning! And it was fun.
+
+Work in progress here!
+
+## Results I
+
+![](images/barPlotcancersubtypedPAM50-04.png){width="800"}
+
+**PAM50 test** usually categorizes cancer into 5 sub-types. But in our dataset, we found 4 sub-types only and we stuck to it.
+
+## Results II
+
+![](images/barPlotAJCCTumorAmount-04.png){width="800"}
+
+-   AJCC staging system: American Joint Committee on Cancer's system to describe the amount and spread of cancer in a patient's body
+
+-   Work in progress here! -- need to rotate the x-axis labels for legibility
+
+    ## Discussion
+
+<!-- -->
+
+-   Work in progress here!
