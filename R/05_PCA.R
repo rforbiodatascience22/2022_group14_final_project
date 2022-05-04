@@ -73,6 +73,8 @@ pcaArrowPlot <- pca_fit %>%
   ) +
   theme(axis.text.x = element_text(size = 5),
         axis.text.y = element_text(size = 5)) + 
+  xlab("PC1 (15.9 %)") + 
+  ylab("PC2 (10.2 %)") +
   xlim(-0.3, 0.1) + ylim(-0.25, 0.25) +
   coord_fixed() + # fix aspect ratio to 1:1
   theme_minimal_grid(12)
