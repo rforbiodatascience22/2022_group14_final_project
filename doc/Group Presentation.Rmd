@@ -23,7 +23,7 @@ library("DiagrammeR")
 ```
 
 ```{r}
-#rm(list = ls())
+
 ```
 
 
