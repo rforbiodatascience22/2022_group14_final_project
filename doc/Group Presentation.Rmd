@@ -4,7 +4,7 @@ title: "Analysis of Proteomes Data for Breast Cancer"
 author:
 - Group 14
 - Alesia Olsen (s174584)
-- Cathrin Lind (s184284)
+- Cathrine Lind (s184338)
 - Mads Hartmann (s184284)
 - Swati Tak (s220868)
 
@@ -16,6 +16,7 @@ output: ioslides_presentation
 ---
 
 ```{r setup, include=FALSE}
+<<<<<<< HEAD
 knitr::opts_chunk$set(echo = TRUE)
 
 install.packages("DiagrammeR")
@@ -24,6 +25,11 @@ library("DiagrammeR")
 
 ```{r}
 
+=======
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(kableExtra)
+>>>>>>> a8c8fda1c826af26cf93c9b5d3eb8dafe0cb9e4b
 ```
 
 
@@ -40,18 +46,52 @@ library("DiagrammeR")
 +===========================================================+=====================+=====================+
 | Protein expression data                                   | 12553               | 86                  |
 |                                                           |                     |                     |
-| *iTRAQ proteome profiling*                                |                     |                     |
+| *iTRAQ proteome profiling from 77 patients*               |                     |                     |
 +-----------------------------------------------------------+---------------------+---------------------+
 | Clinical data                                             | 105                 | 30                  |
 |                                                           |                     |                     |
-| *Cancer classification of samples*                        |                     |                     |
-+-----------------------------------------------------------+---------------------+---------------------+
-| PAM50_proteins                                            | 100                 | 4                   |
-|                                                           |                     |                     |
-| *List of genes and proteins used by PAM50 classification* |                     |                     |
+| *Cancer classification of samples from 77 patients*       |                     |                     |
 +-----------------------------------------------------------+---------------------+---------------------+
 
-*Source: [Kaggle, of course!](https://www.kaggle.com/datasets/piotrgrabo/breastcancerproteomes)*
+
+*Source: [Kaggle](https://www.kaggle.com/datasets/piotrgrabo/breastcancerproteomes)*
+
+## Raw data
+```{r, include = FALSE}
+proteomes_raw <- read_csv(file = "../data/_raw/77_cancer_proteomes_CPTAC_itraq.csv")
+clinical_raw <- read_csv(file = "../data/_raw/clinical_data_breast_cancer.csv")
+```
+
+**Raw Clinical Data**
+105 observations and 30 variables 
+```{r, echo = FALSE}
+clinical_raw %>% 
+  select(0:6) %>%
+  slice(0:4) %>% 
+  kable() %>% 
+  kable_styling(font_size = 9)
+```
+
+**Raw Proteome Data**:
+12 553 observations and 86 variables
+```{r, echo = FALSE}
+proteomes_raw %>% 
+  select(0:5) %>% 
+  slice(0:4) %>% 
+  kable() %>% 
+  kable_styling(font_size = 9)
+```
+
+## Method: Cleaning data
+
+**Clinical data**: 
+- Remove prefix of TCGA from names, so they match proteome data format for TCGA ID
+
+**Proteome data**:
+- Remove 3 sample duplicates to avoid overrepresentation of patient
+- 
+
+## Methods: Augmenting data
 
 ## Methods
 
