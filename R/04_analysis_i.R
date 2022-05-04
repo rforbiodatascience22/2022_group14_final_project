@@ -86,12 +86,24 @@ p5 <- clean_joined_data %>%
        x = "AJCC stage",
        fill = "Tumor amount")
 
+#checking relation between tumor amount and PAM50 mRNA
+#and there dosn't seem to be a relation 
+tumor_vs_pam50 <- clean_joined_data %>% 
+  ggplot(mapping = aes(x= `PAM50 mRNA`, fill = as.factor(Tumor))) +
+  geom_bar()
+
+tumor_vs_pam50
+
+p5
+
+
 # Write data --------------------------------------------------------------
 #write_tsv(...)
 #ggsave(p1, path = "results", filename = "boxPlotPAM50.png")
 # ggsave(p2, path = "results", filename = "barPlotTumorStage.png")
 # ggsave(p3, path = "results", filename = "piePlotPAM50.png")
-
+ggsave(p4, path = "results", filename = "barPlotcancersubtypedPAM50.png")
+ggsave(p5, path = "results", filename = "barPlotAJCCTumorAmount.png")
 
 
 # PCA ---------------------------------------------------------------------
