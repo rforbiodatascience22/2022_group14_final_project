@@ -93,17 +93,19 @@ proteomes_raw %>%
 
 **AJCC staging system**: American Joint Committee on Cancer's system to describe the amount and spread of cancer
 
+## Expression level variation
+
++-----------------------------------------------------------+-----------------------------------------------------------+
+| ![](/cloud/project/results/heatmapPAM50.png){width="343"} | ![](/cloud/project/results/heatmapTumor.png){width="400"} |
++-----------------------------------------------------------+-----------------------------------------------------------+
+
+
 ## Principal components and k-means
 
 +----------------------------------------------------------------+-----------------------------------------------------+
 | ![](/cloud/project/results/pcaRotationMatrix.png){width="397"} | ![](/cloud/project/results/kplot1.png){width="316"} |
 +----------------------------------------------------------------+-----------------------------------------------------+
 
-## Expression level variation
-
-+-----------------------------------------------------------+-----------------------------------------------------------+
-| ![](/cloud/project/results/heatmapPAM50.png){width="343"} | ![](/cloud/project/results/heatmapTumor.png){width="400"} |
-+-----------------------------------------------------------+-----------------------------------------------------------+
 
 ## Discussion
 
