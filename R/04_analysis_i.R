@@ -109,6 +109,19 @@ ggsave(p5, path = "results", filename = "barPlotAJCCTumorAmount.png")
 
 # PCA ---------------------------------------------------------------------
 # First transpose data
+# bla = clean_proteosome_data %>%
+#   pivot_longer(cols = -(`Complete TCGA ID`), 
+#                names_to = "RefSeqProteinID", 
+#                values_to = "Value")
+# 
+# pca_fit <- bla %>% 
+#   select(where(is.numeric)) %>% # retain only numeric columns
+#   drop_na() %>%
+#   prcomp(scale=TRUE) # do PCA on scaled data
+
+
+
+
 newnames <- clean_joined_data_healthy$`Complete TCGA ID`
 clean_joined_data_healthy <- clean_joined_data_healthy %>%
   select(starts_with("NP_"))
@@ -116,10 +129,14 @@ clean_joined_data_healthy_t <- as_tibble(cbind(`RefSeqProteinID` = names(clean_j
 
 # Renaming columns
 #oldnames <- names(clean_joined_data_healthy_t)
-names(clean_joined_data_healthy_t) = newnames
+names(clean_joined_data_healthy_t) = c("RefSeqProteinID", newnames)
 clean_joined_data_healthy_t <- clean_joined_data_healthy_t %>%
   select(!starts_with("Ref")) %>%
   mutate_if(is.character, as.numeric) 
+
+
+write_tsv(x = clean_joined_data_healthy_t,
+          file = "data/03_clean_joined_data_healthy_t.tsv")
   
 
   
@@ -148,7 +165,7 @@ arrow_style <- arrow(
 )
 
 # plot rotation matrix
-pca_fit %>%
+pcaArrowPlot <- pca_fit %>%
   tidy(matrix = "rotation") %>%
   pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value") %>%
   ggplot(aes(PC1, PC2)) +
@@ -164,7 +181,7 @@ pca_fit %>%
   theme_minimal_grid(12)
 
 
-pca_fit %>%
+pcaBarPlot <- pca_fit %>%
   tidy(matrix = "eigenvalues") %>%
   ggplot(aes(PC, percent)) +
   geom_col(fill = "#16A205", alpha = 0.8) +
@@ -181,3 +198,15 @@ pca_fit %>%
         axis.text.y = element_text(size = 5)) + 
   scale_fill_hue(c = 45,
                  l = 80)
+
+
+ggsave(pcaArrowPlot, path = "results", filename = "pcaRotationMatrix.png")
+ggsave(pcaBarPlot, path = "results", filename = "pcaFit.png")
+
+
+# Save PCA fit for clustering
+write_tsv(x =  pca_fit %>%
+                    tidy(matrix = "rotation"),
+          file = "data/04_PCA_fit_rotation.tsv")
+
+
