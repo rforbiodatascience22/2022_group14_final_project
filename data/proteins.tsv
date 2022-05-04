@@ -58,7 +58,7 @@ NAT1	NP_001153644	Homo sapiens	N-acetyltransferase 1 (arylamine N-acetyltransfer
 NAT1	NP_001153651	Homo sapiens	N-acetyltransferase 1 (arylamine N-acetyltransferase)
 NAT1	NP_001153642	Homo sapiens	N-acetyltransferase 1 (arylamine N-acetyltransferase)
 FOXA1	NP_004487	Homo sapiens	forkhead box A1
-ESR1	NP_001116213	Homo sapiens	estrogen receptor 1
+ESR1NP_001116213	Homo sapiens	estrogen receptor 1
 ESR1	NP_001116214	Homo sapiens	estrogen receptor 1
 ESR1	NP_001116212	Homo sapiens	estrogen receptor 1
 ESR1	NP_000116	Homo sapiens	estrogen receptor 1
