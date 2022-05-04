@@ -36,16 +36,18 @@ age_subtype_plot <- clean_joined_data %>%
                                    function(x)-length(x)), 
                        fill = `PAM50 mRNA`)) +
   geom_bar() + 
-  scale_fill_hue(c = 45,l = 80) +
+  scale_fill_hue(c = 45,
+                 l = 80) +
   labs(title = "Barplot of cancer subtyped on PAM50 mRNA",
        y = "Frequency",
        x = "Age Group")
 
 tumor_amount_stage_plot <- clean_joined_data %>% 
-  ggplot(mapping = aes(x= `AJCC Stage`,
+  ggplot(mapping = aes(x = `AJCC Stage`, 
                        fill = as.factor(Tumor))) +
   geom_bar() + 
-  scale_fill_hue(c = 45, l = 80) +
+  scale_fill_hue(c = 45,
+                 l = 80)+
   labs(title = "Barplot of Tumor amount in different AJCC stages",
        y = "Frequency",
        x = "AJCC stage",

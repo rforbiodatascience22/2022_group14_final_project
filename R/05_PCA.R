@@ -47,30 +47,34 @@ pca_fit <- healthyProteomeDataLong %>%
 
 pca_fit %>%
   augment(healthyProteomeDataLong) %>% # add original dataset back in
-  ggplot(aes(.fittedPC1, .fittedPC2)) + 
+  ggplot(aes(.fittedPC1,
+             .fittedPC2)) + 
   geom_point(size = 0.7) +
-  # scale_color_manual(
-  #   values = c(malignant = "#D55E00", benign = "#0072B2")
-  # ) +
   theme_half_open(12) + background_grid()
 
 
 # define arrow style for plotting
-arrow_style <- arrow(
-  angle = 17.5, ends = "first", type = "closed", length = grid::unit(6, "pt"))
+arrow_style <- arrow(angle = 17.5, 
+                     ends = "first", 
+                     type = "closed", 
+                     length = grid::unit(6, "pt"))
 
 # plot rotation matrix
 pcaArrowPlot <- pca_fit %>%
   tidy(matrix = "rotation") %>%
-  pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value") %>%
-  ggplot(aes(PC1, PC2)) +
-  geom_segment(xend = 0, yend = 0, arrow = arrow_style) +
-  geom_text(
-    aes(label = column),
-    hjust = 1, nudge_x = -0.02, 
-    color = c(rep("#CD0606", 77), rep("#16A205", 3)), 
-    size = 2.3
-  ) +
+  pivot_wider(names_from = "PC", 
+              names_prefix = "PC", 
+              values_from = "value") %>%
+  ggplot(aes(PC1, 
+             PC2)) +
+  geom_segment(xend = 0, 
+               yend = 0, 
+               arrow = arrow_style) +
+  geom_text(aes(label = column),
+            hjust = 1, nudge_x = -0.02, 
+            color = c(rep("#CD0606", 77),
+                      rep("#16A205", 3)),
+            size = 2.3) +
   theme(axis.text.x = element_text(size = 5),
         axis.text.y = element_text(size = 5)) + 
   xlab("PC1 (15.9 %)") + 
@@ -82,13 +86,12 @@ pcaArrowPlot <- pca_fit %>%
 
 pcaBarPlot <- pca_fit %>%
   tidy(matrix = "eigenvalues") %>%
-  ggplot(aes(PC, percent)) +
+  ggplot(aes(PC, 
+             percent)) +
   geom_col(fill = "#16A205", alpha = 0.8) +
   scale_x_continuous(breaks = 1:84) +
-  scale_y_continuous(
-    labels = scales::percent_format(),
-    expand = expansion(mult = c(0, 0.01))
-  ) +
+  scale_y_continuous(labels = scales::percent_format(),
+                     expand = expansion(mult = c(0, 0.01))) +
   #theme_minimal_hgrid(12) +
   labs(title = "Variance explained by each PC",
        y = "Percent",
