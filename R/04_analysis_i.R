@@ -141,7 +141,6 @@ write_tsv(x = clean_joined_data_healthy_t,
   
 
   
-
 ## Now time for PCA
 
 pca_fit <- clean_joined_data_healthy_t %>% 
