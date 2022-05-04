@@ -77,6 +77,16 @@ prot <- prot %>%
 joined_data = clinical_data %>% left_join(prot, copy = T)
 
 
+## Extract healthy rows
+healthy_rows <- prot %>%
+  slice_tail(n = 3)
+  
+## Add healthy data rows to joined data
+joined_data_healthy <- joined_data %>%
+  add_row(healthy_rows)
+
+
+
 #view(joined_data)
 #by row 
 #all v-type colums 
@@ -93,9 +103,15 @@ temp <- joined_data %>% select(data_coloumns) %>% filter(.,rowSums(is.na(.)) !=n
 
 
 clean_joined_data <- joined_data %>% drop_na("NP_958782")
+clean_joined_data_healthy <- joined_data_healthy %>% drop_na("NP_958782")
 
 # Write data --------------------------------------------------------------
 write_tsv(x = clean_joined_data,
           file = "data/03_joined_clean_aug_data.tsv")
+
+write_tsv(x = clean_joined_data_healthy,
+          file = "data/03_joined_clean_aug_data_healthy.tsv")
+
+
 
 
