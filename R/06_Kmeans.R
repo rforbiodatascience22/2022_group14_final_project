@@ -41,6 +41,7 @@ kplot1 <- k_pca_aug1 %>%
              y =.fittedPC2, 
              color=Cluster1)) +
     geom_point(size = 0.1) +
+  labs(y="PC2", x="PC1") +
     theme(legend.position = "None")
 
 
@@ -51,9 +52,10 @@ kplot2 <- k_pca_aug2 %>%
              y =.fittedPC2, 
              color=Cluster2)) +
     geom_point(size = 0.1) +
+  labs(y="PC2", x="PC1") +
     theme(legend.position = "None")
 
 kplot2
 
-ggsave(kplot1, path = "results", filename = "kplot1.png")
-ggsave(kplot2, path = "results", filename = "kplot2.png")
+ggsave(kplot1, path = "/cloud/project/results", filename = "kplot1.png")
+ggsave(kplot2, path = "/cloud/project/results", filename = "kplot2.png")

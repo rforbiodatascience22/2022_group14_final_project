@@ -1,22 +1,20 @@
 ---
 title: "Analysis of Proteomes Data for Breast Cancer"
-
 author:
 - Group 14
 - Alesia Olsen (s174584)
 - Cathrine Lind (s184338)
 - Mads Hartmann (s184284)
 - Swati Tak (s220868)
+date: "08 May 2022"
 
-fontsize: 12pt
-theme: cerulean
-
-date: '08 May 2022'
 output: ioslides_presentation
+widescreen: true
 ---
 
-```{r, include=FALSE, fig.align = "left"}
+```{r, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(knitr)
 library(tidyverse)
 library(kableExtra)
 ```
@@ -25,19 +23,19 @@ library(kableExtra)
 
 **Our dataset**: Breast Cancer Proteomes data from the Clinical Proteomic Tumor Analysis Consortium (NCI/NIH)
 
-**Our aim**: To find meaningful biological insights, just like everybody else! And to have some learnings on the way.
+**Our aim**: To find meaningful biological insights and to get some learning on the way
 
-+-----------------------------------------------------+---------------------+---------------------+
-| Dataset name                                        | Observations (rows) | Variables (columns) |
-+=====================================================+=====================+=====================+
-| Protein expression data                             | 12553               | 86                  |
-|                                                     |                     |                     |
-| *iTRAQ proteome profiling from 77 patients*         |                     |                     |
-+-----------------------------------------------------+---------------------+---------------------+
-| Clinical data                                       | 105                 | 30                  |
-|                                                     |                     |                     |
-| *Cancer classification of samples from 77 patients* |                     |                     |
-+-----------------------------------------------------+---------------------+---------------------+
++----------------------------------------------------------------+---------------------+---------------------+
+| Dataset name                                                   | Observations (rows) | Variables (columns) |
++================================================================+=====================+=====================+
+| Clinical data                                                  | 105                 | 30                  |
+|                                                                |                     |                     |
+| *Cancer classification of samples from 77 patients*            |                     |                     |
++----------------------------------------------------------------+---------------------+---------------------+
+| Protein expression data                                        | 12553               | 86                  |
+|                                                                |                     |                     |
+| *iTRAQ proteome profiling from 83 individuals, incl. patients* |                     |                     |
++----------------------------------------------------------------+---------------------+---------------------+
 
 *Source: [Kaggle](https://www.kaggle.com/datasets/piotrgrabo/breastcancerproteomes)*
 
@@ -48,24 +46,24 @@ proteomes_raw <- read_csv(file = "../data/_raw/77_cancer_proteomes_CPTAC_itraq.c
 clinical_raw <- read_csv(file = "../data/_raw/clinical_data_breast_cancer.csv")
 ```
 
-**Raw Clinical Data** 105 observations and 30 variables
+**Raw Clinical Data**: 105 observations and 30 variables
 
 ```{r, echo = FALSE}
 clinical_raw %>% 
   select(0:6) %>%
   slice(0:4) %>% 
   kable() %>% 
-  kable_styling(font_size = 9)
+  kable_styling(font_size = 14)
 ```
 
-**Raw Proteome Data**: 12 553 observations and 86 variables
+**Raw Proteome Data**: 12,553 observations and 86 variables
 
 ```{r, echo = FALSE}
 proteomes_raw %>% 
   select(0:5) %>% 
   slice(0:4) %>% 
   kable() %>% 
-  kable_styling(font_size = 9)
+  kable_styling(font_size = 14)
 ```
 
 # Methods
@@ -80,7 +78,7 @@ proteomes_raw %>%
 
 # Results
 
-## Cancer subtypes in each age group
+## Cancer sub-types in each age group
 
 ![](/cloud/project/results/barPlotcancersubtypedPAM50.png){width="800"}
 
@@ -93,19 +91,20 @@ proteomes_raw %>%
 **AJCC staging system**: American Joint Committee on Cancer's system to describe the amount and spread of cancer
 
 ## Expression level variation
+```{r, echo=FALSE, out.width="50%", out.height="200%"}
+include_graphics(c("../results/heatmapPAM50.png",
+                   "../results/heatmapTumor.png"))
+```
 
-+-----------------------------------------------------------+-----------------------------------------------------------+
-| ![](/cloud/project/results/heatmapPAM50.png){width="400"} | ![](/cloud/project/results/heatmapTumor.png){width="400"} |
-+-----------------------------------------------------------+-----------------------------------------------------------+
-
-## Principal components and k-means
-
-+----------------------------------------------------------------+-----------------------------------------------------+
-| ![](/cloud/project/results/pcaRotationMatrix.png){width="397"} | ![](/cloud/project/results/kplot1.png){width="316"} |
-+----------------------------------------------------------------+-----------------------------------------------------+
+## Principal components and k-means clusters
+<div style= "margin-top: -60px">
+```{r, echo=FALSE, out.width="45%", out.height="45%"}
+include_graphics(c("../results/pcaRotationMatrix.png", "../results/kplot1.png"))
+```
+</div>
 
 ## Discussion
 
 1\. How different is the data for healthy individuals from unhealthy individuals?
 
-2\. Can we target unhealthy individuals with specific different medicines in line with which cluster they are a part of?
+2\. Can we target unhealthy individuals with specific but different medicines in line with which cluster they are a part of?
