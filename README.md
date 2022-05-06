@@ -29,7 +29,7 @@ Once the initial observation was satisfactory, we moved on to the tidying up sta
 With one single set of clean data, it was a matter of putting the right plots in place.
 We performed graphical analysis of different variables, followed by PCA and k-means clustering.
 
-Our entire project journey also included considerations for practical applicability of our work, for example:
+Our entire project journey also included considerations for various comparisons as well as practical applicability of our work, for example:
 1. How different is the data for healthy individuals from unhealthy individuals? 
 2. Can we target unhealthy individuals with specific different medicines in line with which k-means cluster they are a part of?
 
