@@ -22,7 +22,7 @@ We primarily had three sets of data:
 
 # Our analysis
 
-We started out with taking a manuel overview of what the datasets included. We moderated our steps in line with questions like: What kind of information was given in the datasets?
+We started out with taking a manual overview of what the datasets included. We moderated our steps in line with questions like: What kind of information was given in the datasets?
 Are any of the columns or rows related by common characters, names, etc.? Are there NA values?
 
 Once the initial observation was satisfactory, we moved on to the tidying up stage followed by joining of datasets.
