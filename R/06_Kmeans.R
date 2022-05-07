@@ -40,9 +40,16 @@ kplot1 <- k_pca_aug1 %>%
   ggplot(aes(x = .fittedPC1, 
              y =.fittedPC2, 
              color=Cluster1)) +
-    geom_point(size = 0.1) +
-  labs(y="PC2", x="PC1") +
-    theme(legend.position = "None")
+    geom_point(size = 0.2) +
+  xlab("PC1") + 
+  ylab("PC2") +
+  #coord_fixed() + # fix aspect ratio to 1:1
+  theme_minimal_grid(12) + 
+  guides(color = FALSE, 
+         size = FALSE) +
+  theme(axis.text.x = element_text(size = 7),
+      axis.text.y = element_text(size = 7))  
+
 
 
 kplot1

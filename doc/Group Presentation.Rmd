@@ -99,7 +99,8 @@ include_graphics(c("../results/heatmapPAM50.png",
 ## Principal components and k-means clusters
 <div style= "margin-top: -60px">
 ```{r, echo=FALSE, out.width="45%", out.height="45%"}
-include_graphics(c("../results/pcaRotationMatrix.png", "../results/kplot1.png"))
+include_graphics(c("../results/pcaRotationMatrix.png", 
+                   "../results/kplot1.png"))
 ```
 </div>
 
