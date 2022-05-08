@@ -33,7 +33,7 @@ healthyProteomeDataLong <- healthyProteomeDataLong %>%
             as.numeric)
 
 
-#save healthy patients proteome data file 
+# Save healthy patients proteome data file 
 write_tsv(x = healthyProteomeDataLong,
           file = "data/06_healthy_proteome_data_long.tsv")
 
@@ -50,7 +50,8 @@ pca_fit %>%
   ggplot(aes(.fittedPC1,
              .fittedPC2)) + 
   geom_point(size = 0.7) +
-  theme_half_open(12) + background_grid()
+  theme_half_open(12) + 
+  background_grid()
 
 
 # define arrow style for plotting
@@ -71,7 +72,8 @@ pcaArrowPlot <- pca_fit %>%
                yend = 0, 
                arrow = arrow_style) +
   geom_text(aes(label = column),
-            hjust = 1, nudge_x = -0.02, 
+            hjust = 1, 
+            nudge_x = -0.02, 
             color = c(rep("#CD0606", 77),
                       rep("#16A205", 3)),
             size = 2.3) +
@@ -88,7 +90,8 @@ pcaBarPlot <- pca_fit %>%
   tidy(matrix = "eigenvalues") %>%
   ggplot(aes(PC, 
              percent)) +
-  geom_col(fill = "#16A205", alpha = 0.8) +
+  geom_col(fill = "#16A205", 
+           alpha = 0.8) +
   scale_x_continuous(breaks = 1:84) +
   scale_y_continuous(labels = scales::percent_format(),
                      expand = expansion(mult = c(0, 0.01))) +
@@ -110,6 +113,5 @@ ggsave(pcaBarPlot,
        filename = "pcaFit.png")
 
 # Save PCA fit for clustering
-write_tsv(x =  pca_fit %>%
-            tidy(matrix = "rotation"),
-          file = "data/06_PCA_fit_rotation.tsv")
+#write_tsv(x =  pca_fit, # %>%  tidy(matrix = "rotation"),
+#          file = "data/06_PCA_fit_rotation.tsv")
